@@ -28,4 +28,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}/strapi-ponpes:latest
+          tags: ghcr.io/${{ github.repository }}:latest
