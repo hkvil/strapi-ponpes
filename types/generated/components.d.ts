@@ -1,5 +1,61 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface KontakKontak extends Struct.ComponentSchema {
+  collectionName: 'components_kontak_kontaks';
+  info: {
+    displayName: 'kontakItem';
+  };
+  attributes: {
+    jenis: Schema.Attribute.Enumeration<
+      ['telp', 'whatsapp', 'email', 'facebook', 'instagram', 'tiktok']
+    >;
+    order: Schema.Attribute.Integer;
+    value: Schema.Attribute.String;
+  };
+}
+
+export interface ProfilImageItem extends Struct.ComponentSchema {
+  collectionName: 'components_profil_image_items';
+  info: {
+    displayName: 'imageItem';
+  };
+  attributes: {
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    order: Schema.Attribute.Integer;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ProfilProfil extends Struct.ComponentSchema {
+  collectionName: 'components_profil_profils';
+  info: {
+    displayName: 'profil';
+  };
+  attributes: {};
+}
+
+export interface ProfilVideoItem extends Struct.ComponentSchema {
+  collectionName: 'components_profil_video_items';
+  info: {
+    displayName: 'videoItem';
+  };
+  attributes: {
+    order: Schema.Attribute.Integer;
+    title: Schema.Attribute.String;
+    videoUrl: Schema.Attribute.String;
+  };
+}
+
+export interface ProgramKerjaProgramKerja extends Struct.ComponentSchema {
+  collectionName: 'components_program_kerja_program_kerjas';
+  info: {
+    displayName: 'program kerja';
+  };
+  attributes: {
+    program_kerja: Schema.Attribute.RichText;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -65,6 +121,11 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'kontak.kontak': KontakKontak;
+      'profil.image-item': ProfilImageItem;
+      'profil.profil': ProfilProfil;
+      'profil.video-item': ProfilVideoItem;
+      'program-kerja.program-kerja': ProgramKerjaProgramKerja;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

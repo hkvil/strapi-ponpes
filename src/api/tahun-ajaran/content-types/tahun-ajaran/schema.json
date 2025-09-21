@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tahun_ajarans",
+  "info": {
+    "singularName": "tahun-ajaran",
+    "pluralName": "tahun-ajarans",
+    "displayName": "Tahun Ajaran"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tahunAjaran": {
+      "type": "string"
+    },
+    "semester": {
+      "type": "enumeration",
+      "enum": [
+        "GANJIL",
+        "GENAP"
+      ]
+    },
+    "aktif": {
+      "type": "boolean"
+    }
+  }
+}

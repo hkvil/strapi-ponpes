@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_program_kerja_program_kerjas",
+  "info": {
+    "displayName": "program kerja"
+  },
+  "options": {},
+  "attributes": {
+    "program_kerja": {
+      "type": "richtext"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lembagas",
+  "info": {
+    "singularName": "lembaga",
+    "pluralName": "lembagas",
+    "displayName": "Lembaga"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "customId": {
+      "type": "uid"
+    },
+    "nama": {
+      "type": "string"
+    },
+    "profilMd": {
+      "type": "richtext"
+    },
+    "programKerjaMd": {
+      "type": "richtext"
+    },
+    "images": {
+      "type": "component",
+      "component": "profil.image-item",
+      "repeatable": true
+    },
+    "videos": {
+      "type": "component",
+      "component": "profil.video-item",
+      "repeatable": true
+    },
+    "kontak": {
+      "type": "component",
+      "component": "kontak.kontak",
+      "repeatable": true
+    }
+  }
+}

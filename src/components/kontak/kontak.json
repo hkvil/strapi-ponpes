@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_kontak_kontaks",
+  "info": {
+    "displayName": "kontakItem"
+  },
+  "options": {},
+  "attributes": {
+    "jenis": {
+      "type": "enumeration",
+      "enum": [
+        "telp",
+        "whatsapp",
+        "email",
+        "facebook",
+        "instagram",
+        "tiktok"
+      ]
+    },
+    "value": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    }
+  },
+  "config": {}
+}

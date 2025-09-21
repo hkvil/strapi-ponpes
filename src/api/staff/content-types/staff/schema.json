@@ -1,0 +1,101 @@
+{
+  "kind": "collectionType",
+  "collectionName": "staffs",
+  "info": {
+    "singularName": "staff",
+    "pluralName": "staffs",
+    "displayName": "Staff"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nama": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "enumeration",
+      "enum": [
+        "PUSAT KEPEGAWAIAN DAN PENGAWASAN",
+        "PUSAT PENGAWASAN DAN PEMBINAAN SDM PUTRI",
+        "PUSAT PENJAMINAN MUTU DAN PENGAJARAN"
+      ]
+    },
+    "tempatLahir": {
+      "type": "string"
+    },
+    "tanggalLahir": {
+      "type": "date"
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": [
+        "L",
+        "P"
+      ]
+    },
+    "agama": {
+      "type": "enumeration",
+      "enum": [
+        "ISLAM"
+      ]
+    },
+    "noTelepon": {
+      "type": "string"
+    },
+    "namaIbu": {
+      "type": "string"
+    },
+    "NIK": {
+      "type": "string"
+    },
+    "kategoriPersonil": {
+      "type": "enumeration",
+      "enum": [
+        "GURU",
+        "PENGURUS",
+        "STAFF"
+      ]
+    },
+    "keteranganTugas": {
+      "type": "text"
+    },
+    "statusKepegawaian": {
+      "type": "enumeration",
+      "enum": [
+        "PNS",
+        "GTY",
+        "GTTY",
+        "HONORER",
+        "KONTRAK"
+      ]
+    },
+    "mulaiTugas": {
+      "type": "date"
+    },
+    "aktif": {
+      "type": "boolean"
+    },
+    "pendidikanTerakhir": {
+      "type": "enumeration",
+      "enum": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    "lulusan": {
+      "type": "string"
+    },
+    "statusPNS": {
+      "type": "boolean"
+    },
+    "statusGuruTetap": {
+      "type": "boolean"
+    },
+    "sertifikasi": {
+      "type": "text"
+    }
+  }
+}

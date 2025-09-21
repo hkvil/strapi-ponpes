@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_profil_image_items",
+  "info": {
+    "displayName": "imageItem"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    }
+  },
+  "config": {}
+}

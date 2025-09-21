@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pelanggarans",
+  "info": {
+    "singularName": "pelanggaran",
+    "pluralName": "pelanggarans",
+    "displayName": "Pelanggaran"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "jenis": {
+      "type": "string"
+    },
+    "poin": {
+      "type": "integer"
+    },
+    "keterangan": {
+      "type": "text"
+    },
+    "tanggal": {
+      "type": "date"
+    }
+  }
+}

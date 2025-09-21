@@ -538,6 +538,283 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
+  collectionName: 'kelass';
+  info: {
+    displayName: 'Kelas';
+    pluralName: 'kelass';
+    singularName: 'kelas';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    label: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::kelas.kelas'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    rombel: Schema.Attribute.String;
+    santrises: Schema.Attribute.Relation<'oneToMany', 'api::santri.santri'>;
+    tingkat: Schema.Attribute.Enumeration<
+      ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
+  collectionName: 'lembagas';
+  info: {
+    displayName: 'Lembaga';
+    pluralName: 'lembagas';
+    singularName: 'lembaga';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    customId: Schema.Attribute.UID;
+    images: Schema.Attribute.Component<'profil.image-item', true>;
+    kontak: Schema.Attribute.Component<'kontak.kontak', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::lembaga.lembaga'
+    > &
+      Schema.Attribute.Private;
+    nama: Schema.Attribute.String;
+    profilMd: Schema.Attribute.RichText;
+    programKerjaMd: Schema.Attribute.RichText;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    videos: Schema.Attribute.Component<'profil.video-item', true>;
+  };
+}
+
+export interface ApiPelanggaranPelanggaran extends Struct.CollectionTypeSchema {
+  collectionName: 'pelanggarans';
+  info: {
+    displayName: 'Pelanggaran';
+    pluralName: 'pelanggarans';
+    singularName: 'pelanggaran';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    jenis: Schema.Attribute.String;
+    keterangan: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pelanggaran.pelanggaran'
+    > &
+      Schema.Attribute.Private;
+    poin: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    tanggal: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPrestasiPrestasi extends Struct.CollectionTypeSchema {
+  collectionName: 'prestasis';
+  info: {
+    displayName: 'Prestasi';
+    pluralName: 'prestasis';
+    singularName: 'prestasi';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bidang: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::prestasi.prestasi'
+    > &
+      Schema.Attribute.Private;
+    namaLomba: Schema.Attribute.String;
+    penyelenggara: Schema.Attribute.String;
+    peringkat: Schema.Attribute.Enumeration<
+      ['Juara 1', 'Juara 2', 'Juara 3', 'Harapan 1', 'Harapan 2', 'Harapan 3']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    tahun: Schema.Attribute.String;
+    tingkat: Schema.Attribute.Enumeration<
+      [
+        'Sekolah',
+        'Kecamatan',
+        'Kabupaten/Kota',
+        'Provinsi',
+        'Nasional',
+        'Internasional',
+      ]
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
+  collectionName: 'santris';
+  info: {
+    displayName: 'Santri';
+    pluralName: 'santris';
+    singularName: 'santri';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    aktif: Schema.Attribute.Boolean;
+    alumni: Schema.Attribute.Boolean;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    gender: Schema.Attribute.Enumeration<['L', 'P']>;
+    kecamatan: Schema.Attribute.String;
+    kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
+    kelurahan: Schema.Attribute.String;
+    kota: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::santri.santri'
+    > &
+      Schema.Attribute.Private;
+    madrasah: Schema.Attribute.Enumeration<
+      [
+        'TAMAN KANAK-KANAK',
+        'TAMAN PENDIDIKAN AL-QUR`AN',
+        'MADRASAH DINIYAH',
+        'MADRASAH IBTIDAIYAH',
+        'MADRASAH TSANAWIYAH PUTRA',
+        'MADRASAH TSANAWIYAH PUTR',
+        'MADRASAH ALIYAH PUTRA',
+        'MADRASAH ALIYAH PUTRI',
+      ]
+    >;
+    nama: Schema.Attribute.String;
+    namaAyah: Schema.Attribute.String;
+    namaIbu: Schema.Attribute.String;
+    nisn: Schema.Attribute.String & Schema.Attribute.Unique;
+    nomorIjazah: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    tahunIjazah: Schema.Attribute.String;
+    tanggalLahir: Schema.Attribute.Date;
+    tempatLahir: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
+  collectionName: 'staffs';
+  info: {
+    displayName: 'Staff';
+    pluralName: 'staffs';
+    singularName: 'staff';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    agama: Schema.Attribute.Enumeration<['ISLAM']>;
+    aktif: Schema.Attribute.Boolean;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    gender: Schema.Attribute.Enumeration<['L', 'P']>;
+    kategoriPersonil: Schema.Attribute.Enumeration<
+      ['GURU', 'PENGURUS', 'STAFF']
+    >;
+    keteranganTugas: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::staff.staff'> &
+      Schema.Attribute.Private;
+    lulusan: Schema.Attribute.String;
+    mulaiTugas: Schema.Attribute.Date;
+    nama: Schema.Attribute.String;
+    namaIbu: Schema.Attribute.String;
+    NIK: Schema.Attribute.String;
+    noTelepon: Schema.Attribute.String;
+    pendidikanTerakhir: Schema.Attribute.Enumeration<['S1', 'S2', 'S3']>;
+    publishedAt: Schema.Attribute.DateTime;
+    sertifikasi: Schema.Attribute.Text;
+    statusGuruTetap: Schema.Attribute.Boolean;
+    statusKepegawaian: Schema.Attribute.Enumeration<
+      ['PNS', 'GTY', 'GTTY', 'HONORER', 'KONTRAK']
+    >;
+    statusPNS: Schema.Attribute.Boolean;
+    tanggalLahir: Schema.Attribute.Date;
+    tempatLahir: Schema.Attribute.String;
+    unit: Schema.Attribute.Enumeration<
+      [
+        'PUSAT KEPEGAWAIAN DAN PENGAWASAN',
+        'PUSAT PENGAWASAN DAN PEMBINAAN SDM PUTRI',
+        'PUSAT PENJAMINAN MUTU DAN PENGAJARAN',
+      ]
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
+  collectionName: 'tahun_ajarans';
+  info: {
+    displayName: 'Tahun Ajaran';
+    pluralName: 'tahun-ajarans';
+    singularName: 'tahun-ajaran';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    aktif: Schema.Attribute.Boolean;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tahun-ajaran.tahun-ajaran'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    semester: Schema.Attribute.Enumeration<['GANJIL', 'GENAP']>;
+    tahunAjaran: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1052,6 +1329,13 @@ declare module '@strapi/strapi' {
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
       'api::global.global': ApiGlobalGlobal;
+      'api::kelas.kelas': ApiKelasKelas;
+      'api::lembaga.lembaga': ApiLembagaLembaga;
+      'api::pelanggaran.pelanggaran': ApiPelanggaranPelanggaran;
+      'api::prestasi.prestasi': ApiPrestasiPrestasi;
+      'api::santri.santri': ApiSantriSantri;
+      'api::staff.staff': ApiStaffStaff;
+      'api::tahun-ajaran.tahun-ajaran': ApiTahunAjaranTahunAjaran;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

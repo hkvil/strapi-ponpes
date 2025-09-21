@@ -1,0 +1,91 @@
+{
+  "kind": "collectionType",
+  "collectionName": "santris",
+  "info": {
+    "singularName": "santri",
+    "pluralName": "santris",
+    "displayName": "Santri"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nama": {
+      "type": "string"
+    },
+    "nisn": {
+      "type": "string",
+      "unique": true
+    },
+    "madrasah": {
+      "type": "enumeration",
+      "enum": [
+        "TAMAN KANAK-KANAK",
+        "TAMAN PENDIDIKAN AL-QUR`AN",
+        "MADRASAH DINIYAH",
+        "MADRASAH IBTIDAIYAH",
+        "MADRASAH TSANAWIYAH PUTRA",
+        "MADRASAH TSANAWIYAH PUTR",
+        "MADRASAH ALIYAH PUTRA",
+        "MADRASAH ALIYAH PUTRI"
+      ]
+    },
+    "foto": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": [
+        "L",
+        "P"
+      ]
+    },
+    "tempatLahir": {
+      "type": "string"
+    },
+    "tanggalLahir": {
+      "type": "date"
+    },
+    "namaAyah": {
+      "type": "string"
+    },
+    "namaIbu": {
+      "type": "string"
+    },
+    "kelurahan": {
+      "type": "string"
+    },
+    "kecamatan": {
+      "type": "string"
+    },
+    "kota": {
+      "type": "string"
+    },
+    "nomorIjazah": {
+      "type": "string"
+    },
+    "tahunIjazah": {
+      "type": "string"
+    },
+    "aktif": {
+      "type": "boolean"
+    },
+    "alumni": {
+      "type": "boolean"
+    },
+    "kelas": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kelas.kelas",
+      "inversedBy": "santrises"
+    }
+  }
+}

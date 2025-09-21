@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_profil_video_items",
+  "info": {
+    "displayName": "videoItem"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "videoUrl": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    }
+  },
+  "config": {}
+}

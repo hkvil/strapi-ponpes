@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "kelass",
+  "info": {
+    "singularName": "kelas",
+    "pluralName": "kelass",
+    "displayName": "Kelas"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tingkat": {
+      "type": "enumeration",
+      "enum": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII"
+      ]
+    },
+    "rombel": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "santrises": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::santri.santri",
+      "mappedBy": "kelas"
+    }
+  }
+}

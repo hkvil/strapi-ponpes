@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prestasis",
+  "info": {
+    "singularName": "prestasi",
+    "pluralName": "prestasis",
+    "displayName": "Prestasi"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "namaLomba": {
+      "type": "string"
+    },
+    "bidang": {
+      "type": "string"
+    },
+    "penyelenggara": {
+      "type": "string"
+    },
+    "tingkat": {
+      "type": "enumeration",
+      "enum": [
+        "Sekolah",
+        "Kecamatan",
+        "Kabupaten/Kota",
+        "Provinsi",
+        "Nasional",
+        "Internasional"
+      ]
+    },
+    "peringkat": {
+      "type": "enumeration",
+      "enum": [
+        "Juara 1",
+        "Juara 2",
+        "Juara 3",
+        "Harapan 1",
+        "Harapan 2",
+        "Harapan 3"
+      ]
+    },
+    "tahun": {
+      "type": "string"
+    }
+  }
+}
