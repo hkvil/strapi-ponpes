@@ -402,110 +402,6 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
-  collectionName: 'articles';
-  info: {
-    description: 'Create your blog content';
-    displayName: 'Article';
-    pluralName: 'articles';
-    singularName: 'article';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
-    blocks: Schema.Attribute.DynamicZone<
-      ['shared.media', 'shared.quote', 'shared.rich-text', 'shared.slider']
-    >;
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
-    cover: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
-      }>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::article.article'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'title'>;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
-  collectionName: 'authors';
-  info: {
-    description: 'Create authors for your content';
-    displayName: 'Author';
-    pluralName: 'authors';
-    singularName: 'author';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    email: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::author.author'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
-  collectionName: 'categories';
-  info: {
-    description: 'Organize your content into categories';
-    displayName: 'Category';
-    pluralName: 'categories';
-    singularName: 'category';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::category.category'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -557,8 +453,11 @@ export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::kelas.kelas'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    riwayatKelas: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::riwayat-kelas.riwayat-kelas'
+    >;
     rombel: Schema.Attribute.String;
-    santrises: Schema.Attribute.Relation<'oneToMany', 'api::santri.santri'>;
     tingkat: Schema.Attribute.Enumeration<
       ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
     >;
@@ -579,10 +478,10 @@ export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    botBanner: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    customId: Schema.Attribute.UID;
     images: Schema.Attribute.Component<'profil.image-item', true>;
     kontak: Schema.Attribute.Component<'kontak.kontak', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -595,6 +494,8 @@ export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
     profilMd: Schema.Attribute.RichText;
     programKerjaMd: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'nama'>;
+    topBanner: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -626,7 +527,38 @@ export interface ApiPelanggaranPelanggaran extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     poin: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
+    santri: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
     tanggal: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPrestasiDanPenghargaanPesantrenPrestasiDanPenghargaanPesantren
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'prestasi_dan_penghargaan_pesantrens';
+  info: {
+    displayName: 'Prestasi dan Penghargaan Pesantren';
+    pluralName: 'prestasi-dan-penghargaan-pesantrens';
+    singularName: 'prestasi-dan-penghargaan-pesantren';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::prestasi-dan-penghargaan-pesantren.prestasi-dan-penghargaan-pesantren'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    thumbnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -660,6 +592,7 @@ export interface ApiPrestasiPrestasi extends Struct.CollectionTypeSchema {
       ['Juara 1', 'Juara 2', 'Juara 3', 'Harapan 1', 'Harapan 2', 'Harapan 3']
     >;
     publishedAt: Schema.Attribute.DateTime;
+    santri: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
     tahun: Schema.Attribute.String;
     tingkat: Schema.Attribute.Enumeration<
       [
@@ -677,6 +610,46 @@ export interface ApiPrestasiPrestasi extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiRiwayatKelasRiwayatKelas
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'riwayat_kelass';
+  info: {
+    displayName: 'Riwayat Kelas';
+    pluralName: 'riwayat-kelass';
+    singularName: 'riwayat-kelas';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    catatan: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::riwayat-kelas.riwayat-kelas'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    santri: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
+    statusSantri: Schema.Attribute.Enumeration<
+      ['AKTIF', 'LULUS', 'PINDAH', 'CUTI']
+    >;
+    tahunAjaran: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::tahun-ajaran.tahun-ajaran'
+    >;
+    tanggalMulai: Schema.Attribute.Date;
+    tanggalSelesai: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
   collectionName: 'santris';
   info: {
@@ -688,15 +661,12 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    aktif: Schema.Attribute.Boolean;
-    alumni: Schema.Attribute.Boolean;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     gender: Schema.Attribute.Enumeration<['L', 'P']>;
     kecamatan: Schema.Attribute.String;
-    kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
     kelurahan: Schema.Attribute.String;
     kota: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -722,10 +692,51 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
     namaIbu: Schema.Attribute.String;
     nisn: Schema.Attribute.String & Schema.Attribute.Unique;
     nomorIjazah: Schema.Attribute.String;
+    pelanggarans: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pelanggaran.pelanggaran'
+    >;
+    prestasis: Schema.Attribute.Relation<'oneToMany', 'api::prestasi.prestasi'>;
     publishedAt: Schema.Attribute.DateTime;
+    riwayatKelas: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::riwayat-kelas.riwayat-kelas'
+    >;
     tahunIjazah: Schema.Attribute.String;
     tanggalLahir: Schema.Attribute.Date;
     tempatLahir: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSliderSlider extends Struct.CollectionTypeSchema {
+  collectionName: 'sliders';
+  info: {
+    displayName: 'Slider';
+    pluralName: 'sliders';
+    singularName: 'slider';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::slider.slider'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -774,9 +785,51 @@ export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
     tempatLahir: Schema.Attribute.String;
     unit: Schema.Attribute.Enumeration<
       [
-        'PUSAT KEPEGAWAIAN DAN PENGAWASAN',
-        'PUSAT PENGAWASAN DAN PEMBINAAN SDM PUTRI',
-        'PUSAT PENJAMINAN MUTU DAN PENGAJARAN',
+        'Pusat Kepegawaian dan Pengawasan  ',
+        'Pusat Pengawasan dan Pembinaan SDM Putri  ',
+        'Pusat Penjaminan Mutu Pendidikan dan Pengajaran  ',
+        'Taman Kanak-Kanak  ',
+        'Taman Pendidikan Al-Qur\u2019an  ',
+        'Madrasah Diniyah  ',
+        'Madrasah Ibtidaiyah  ',
+        'Madrasah Tsanawiyah Putra  ',
+        'Madrasah Tsanawiyah Putri  ',
+        'Madrasah Aliyah Putra  ',
+        'Madrasah Aliyah Putri  ',
+        'Madrasah Tahfizh Lil Athfal  ',
+        'Institut Mujahadah dan Pembibitan  ',
+        'Haromain  ',
+        'Al Ittifaqiah Language Center  ',
+        'LEMTATIQHI PA  ',
+        'LEMTATIQHI PI  ',
+        'LEBAH Putra  ',
+        'LEBAH Putri  ',
+        'LESGATRAM Putra  ',
+        'LESGATRAM Putri  ',
+        'Lembaga Muhadhoroh Putra  ',
+        'Lembaga Muhadhoroh Putri  ',
+        'LEMKAKIKU  ',
+        'LEMKAPPI  ',
+        'LERASI_LOGINTARU  ',
+        'LK2PPI  ',
+        'DATSUHBINOSPI Putra  ',
+        'DATSUHBINOSPI Putri  ',
+        'Biro Pengkaderan, Beasiswa dan Kerjasama  ',
+        'ADKEU  ',
+        'BIDDAPPMASSUL  ',
+        'Bidang Kebersihan, Perairan, Pertamanan dan Lingkungan Hidup  ',
+        'Bidang Sarana Prasarana, Perlistrikan dan Transportasi  ',
+        'KESLOGMESS  ',
+        'Klinik  ',
+        'Bidang Keamanan, Ketertiban  ',
+        'Hubungan Masyarakat dan Protokol  ',
+        'IWAPPI  ',
+        'PUSPAMAYA  ',
+        'PUSDEM  ',
+        'Avicenna Institute  ',
+        'PUSDAP  ',
+        'PBHU  ',
+        'LPBI  ',
       ]
     >;
     updatedAt: Schema.Attribute.DateTime;
@@ -807,6 +860,10 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    riwayat_kelas: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::riwayat-kelas.riwayat-kelas'
+    >;
     semester: Schema.Attribute.Enumeration<['GANJIL', 'GENAP']>;
     tahunAjaran: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1325,15 +1382,15 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
-      'api::article.article': ApiArticleArticle;
-      'api::author.author': ApiAuthorAuthor;
-      'api::category.category': ApiCategoryCategory;
       'api::global.global': ApiGlobalGlobal;
       'api::kelas.kelas': ApiKelasKelas;
       'api::lembaga.lembaga': ApiLembagaLembaga;
       'api::pelanggaran.pelanggaran': ApiPelanggaranPelanggaran;
+      'api::prestasi-dan-penghargaan-pesantren.prestasi-dan-penghargaan-pesantren': ApiPrestasiDanPenghargaanPesantrenPrestasiDanPenghargaanPesantren;
       'api::prestasi.prestasi': ApiPrestasiPrestasi;
+      'api::riwayat-kelas.riwayat-kelas': ApiRiwayatKelasRiwayatKelas;
       'api::santri.santri': ApiSantriSantri;
+      'api::slider.slider': ApiSliderSlider;
       'api::staff.staff': ApiStaffStaff;
       'api::tahun-ajaran.tahun-ajaran': ApiTahunAjaranTahunAjaran;
       'plugin::content-releases.release': PluginContentReleasesRelease;

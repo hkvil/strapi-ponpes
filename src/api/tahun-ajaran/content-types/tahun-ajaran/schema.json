@@ -23,6 +23,12 @@
     },
     "aktif": {
       "type": "boolean"
+    },
+    "riwayat_kelas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::riwayat-kelas.riwayat-kelas",
+      "mappedBy": "tahunAjaran"
     }
   }
 }

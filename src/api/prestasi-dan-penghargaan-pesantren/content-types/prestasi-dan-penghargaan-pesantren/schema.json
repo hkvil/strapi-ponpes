@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prestasi_dan_penghargaan_pesantrens",
+  "info": {
+    "singularName": "prestasi-dan-penghargaan-pesantren",
+    "pluralName": "prestasi-dan-penghargaan-pesantrens",
+    "displayName": "Prestasi dan Penghargaan Pesantren"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

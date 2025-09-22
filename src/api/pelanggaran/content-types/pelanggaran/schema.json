@@ -22,6 +22,12 @@
     },
     "tanggal": {
       "type": "date"
+    },
+    "santri": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::santri.santri",
+      "inversedBy": "pelanggarans"
     }
   }
 }

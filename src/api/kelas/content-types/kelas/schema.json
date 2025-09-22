@@ -34,10 +34,10 @@
     "label": {
       "type": "string"
     },
-    "santrises": {
+    "riwayatKelas": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::santri.santri",
+      "target": "api::riwayat-kelas.riwayat-kelas",
       "mappedBy": "kelas"
     }
   }

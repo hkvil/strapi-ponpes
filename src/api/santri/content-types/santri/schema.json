@@ -75,17 +75,23 @@
     "tahunIjazah": {
       "type": "string"
     },
-    "aktif": {
-      "type": "boolean"
-    },
-    "alumni": {
-      "type": "boolean"
-    },
-    "kelas": {
+    "riwayatKelas": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::kelas.kelas",
-      "inversedBy": "santrises"
+      "relation": "oneToMany",
+      "target": "api::riwayat-kelas.riwayat-kelas",
+      "mappedBy": "santri"
+    },
+    "prestasis": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::prestasi.prestasi",
+      "mappedBy": "santri"
+    },
+    "pelanggarans": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::pelanggaran.pelanggaran",
+      "mappedBy": "santri"
     }
   }
 }

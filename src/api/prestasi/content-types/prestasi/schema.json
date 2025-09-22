@@ -44,6 +44,12 @@
     },
     "tahun": {
       "type": "string"
+    },
+    "santri": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::santri.santri",
+      "inversedBy": "prestasis"
     }
   }
 }

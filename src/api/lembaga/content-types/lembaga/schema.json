@@ -11,17 +11,38 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "customId": {
-      "type": "uid"
-    },
     "nama": {
       "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "nama"
     },
     "profilMd": {
       "type": "richtext"
     },
     "programKerjaMd": {
       "type": "richtext"
+    },
+    "topBanner": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "botBanner": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "images": {
       "type": "component",

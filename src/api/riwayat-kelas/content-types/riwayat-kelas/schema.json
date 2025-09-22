@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "riwayat_kelass",
+  "info": {
+    "singularName": "riwayat-kelas",
+    "pluralName": "riwayat-kelass",
+    "displayName": "Riwayat Kelas"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "santri": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::santri.santri",
+      "inversedBy": "riwayatKelas"
+    },
+    "kelas": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kelas.kelas",
+      "inversedBy": "riwayatKelas"
+    },
+    "tahunAjaran": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tahun-ajaran.tahun-ajaran",
+      "inversedBy": "riwayat_kelas"
+    },
+    "statusSantri": {
+      "type": "enumeration",
+      "enum": [
+        "AKTIF",
+        "LULUS",
+        "PINDAH",
+        "CUTI"
+      ]
+    },
+    "tanggalMulai": {
+      "type": "date"
+    },
+    "tanggalSelesai": {
+      "type": "date"
+    },
+    "catatan": {
+      "type": "text"
+    }
+  }
+}
