@@ -1,14 +1,14 @@
 {
-  "collectionName": "components_profil_image_items",
+  "collectionName": "components_profil_beritas",
   "info": {
-    "displayName": "imageItem"
+    "displayName": "informasi"
   },
   "options": {},
   "attributes": {
     "title": {
       "type": "string"
     },
-    "media": {
+    "thubmnail": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
@@ -18,14 +18,8 @@
         "audios"
       ]
     },
-    "order": {
-      "type": "integer"
-    },
-    "desc": {
-      "type": "text"
-    },
-    "date": {
-      "type": "date"
+    "content": {
+      "type": "richtext"
     }
   },
   "config": {}

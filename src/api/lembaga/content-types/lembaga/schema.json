@@ -24,6 +24,16 @@
     "programKerjaMd": {
       "type": "richtext"
     },
+    "frontImages": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
     "topBanner": {
       "type": "media",
       "multiple": false,
@@ -57,6 +67,11 @@
     "kontak": {
       "type": "component",
       "component": "kontak.kontak",
+      "repeatable": true
+    },
+    "infos": {
+      "type": "component",
+      "component": "profil.berita",
       "repeatable": true
     }
   }

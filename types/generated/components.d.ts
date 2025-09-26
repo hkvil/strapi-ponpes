@@ -7,11 +7,39 @@ export interface KontakKontak extends Struct.ComponentSchema {
   };
   attributes: {
     jenis: Schema.Attribute.Enumeration<
-      ['telp', 'whatsapp', 'email', 'facebook', 'instagram', 'tiktok']
+      [
+        'telp',
+        'youtube',
+        'facebook',
+        'twitter',
+        'line',
+        'whatsapp',
+        'instagram',
+      ]
     >;
     order: Schema.Attribute.Integer;
     value: Schema.Attribute.String;
   };
+}
+
+export interface ProfilBerita extends Struct.ComponentSchema {
+  collectionName: 'components_profil_beritas';
+  info: {
+    displayName: 'informasi';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    thubmnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ProfilFiles extends Struct.ComponentSchema {
+  collectionName: 'components_profil_files';
+  info: {
+    displayName: 'files';
+  };
+  attributes: {};
 }
 
 export interface ProfilImageItem extends Struct.ComponentSchema {
@@ -20,6 +48,8 @@ export interface ProfilImageItem extends Struct.ComponentSchema {
     displayName: 'imageItem';
   };
   attributes: {
+    date: Schema.Attribute.Date;
+    desc: Schema.Attribute.Text;
     media: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     order: Schema.Attribute.Integer;
     title: Schema.Attribute.String;
@@ -40,6 +70,8 @@ export interface ProfilVideoItem extends Struct.ComponentSchema {
     displayName: 'videoItem';
   };
   attributes: {
+    date: Schema.Attribute.Date;
+    desc: Schema.Attribute.Text;
     order: Schema.Attribute.Integer;
     title: Schema.Attribute.String;
     videoUrl: Schema.Attribute.String;
@@ -122,6 +154,8 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'kontak.kontak': KontakKontak;
+      'profil.berita': ProfilBerita;
+      'profil.files': ProfilFiles;
       'profil.image-item': ProfilImageItem;
       'profil.profil': ProfilProfil;
       'profil.video-item': ProfilVideoItem;

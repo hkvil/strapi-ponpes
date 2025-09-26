@@ -482,7 +482,12 @@ export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    frontImages: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     images: Schema.Attribute.Component<'profil.image-item', true>;
+    infos: Schema.Attribute.Component<'profil.berita', true>;
     kontak: Schema.Attribute.Component<'kontak.kontak', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -547,6 +552,7 @@ export interface ApiPrestasiDanPenghargaanPesantrenPrestasiDanPenghargaanPesantr
     draftAndPublish: true;
   };
   attributes: {
+    content: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

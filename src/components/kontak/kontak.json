@@ -9,11 +9,12 @@
       "type": "enumeration",
       "enum": [
         "telp",
-        "whatsapp",
-        "email",
+        "youtube",
         "facebook",
-        "instagram",
-        "tiktok"
+        "twitter",
+        "line",
+        "whatsapp",
+        "instagram"
       ]
     },
     "value": {
