@@ -39,6 +39,18 @@
       "relation": "oneToMany",
       "target": "api::riwayat-kelas.riwayat-kelas",
       "mappedBy": "kelas"
+    },
+    "kehadiran_guru": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::kehadiran-guru.kehadiran-guru",
+      "mappedBy": "kelas"
+    },
+    "kehadiran_santri": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::kehadiran-santri.kehadiran-santri",
+      "mappedBy": "kelas"
     }
   }
 }

@@ -24,7 +24,7 @@
     "aktif": {
       "type": "boolean"
     },
-    "riwayat_kelas": {
+    "riwayatKelas": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::riwayat-kelas.riwayat-kelas",

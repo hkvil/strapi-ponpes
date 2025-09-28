@@ -14,55 +14,11 @@
     "nama": {
       "type": "string"
     },
-    "unit": {
-      "type": "enumeration",
-      "enum": [
-        "Pusat Kepegawaian dan Pengawasan  ",
-        "Pusat Pengawasan dan Pembinaan SDM Putri  ",
-        "Pusat Penjaminan Mutu Pendidikan dan Pengajaran  ",
-        "Taman Kanak-Kanak  ",
-        "Taman Pendidikan Al-Qur’an  ",
-        "Madrasah Diniyah  ",
-        "Madrasah Ibtidaiyah  ",
-        "Madrasah Tsanawiyah Putra  ",
-        "Madrasah Tsanawiyah Putri  ",
-        "Madrasah Aliyah Putra  ",
-        "Madrasah Aliyah Putri  ",
-        "Madrasah Tahfizh Lil Athfal  ",
-        "Institut Mujahadah dan Pembibitan  ",
-        "Haromain  ",
-        "Al Ittifaqiah Language Center  ",
-        "LEMTATIQHI PA  ",
-        "LEMTATIQHI PI  ",
-        "LEBAH Putra  ",
-        "LEBAH Putri  ",
-        "LESGATRAM Putra  ",
-        "LESGATRAM Putri  ",
-        "Lembaga Muhadhoroh Putra  ",
-        "Lembaga Muhadhoroh Putri  ",
-        "LEMKAKIKU  ",
-        "LEMKAPPI  ",
-        "LERASI_LOGINTARU  ",
-        "LK2PPI  ",
-        "DATSUHBINOSPI Putra  ",
-        "DATSUHBINOSPI Putri  ",
-        "Biro Pengkaderan, Beasiswa dan Kerjasama  ",
-        "ADKEU  ",
-        "BIDDAPPMASSUL  ",
-        "Bidang Kebersihan, Perairan, Pertamanan dan Lingkungan Hidup  ",
-        "Bidang Sarana Prasarana, Perlistrikan dan Transportasi  ",
-        "KESLOGMESS  ",
-        "Klinik  ",
-        "Bidang Keamanan, Ketertiban  ",
-        "Hubungan Masyarakat dan Protokol  ",
-        "IWAPPI  ",
-        "PUSPAMAYA  ",
-        "PUSDEM  ",
-        "Avicenna Institute  ",
-        "PUSDAP  ",
-        "PBHU  ",
-        "LPBI  "
-      ]
+    "lembaga": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::lembaga.lembaga",
+      "inversedBy": "staffs"
     },
     "tempatLahir": {
       "type": "string"
@@ -138,6 +94,12 @@
     },
     "sertifikasi": {
       "type": "text"
+    },
+    "kehadiran": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::kehadiran-guru.kehadiran-guru",
+      "mappedBy": "nama"
     }
   }
 }

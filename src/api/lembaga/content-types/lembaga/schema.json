@@ -73,6 +73,18 @@
       "type": "component",
       "component": "profil.berita",
       "repeatable": true
+    },
+    "santris": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::santri.santri",
+      "mappedBy": "lembaga"
+    },
+    "staffs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::staff.staff",
+      "mappedBy": "lembaga"
     }
   }
 }

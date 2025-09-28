@@ -18,18 +18,11 @@
       "type": "string",
       "unique": true
     },
-    "madrasah": {
-      "type": "enumeration",
-      "enum": [
-        "TAMAN KANAK-KANAK",
-        "TAMAN PENDIDIKAN AL-QUR`AN",
-        "MADRASAH DINIYAH",
-        "MADRASAH IBTIDAIYAH",
-        "MADRASAH TSANAWIYAH PUTRA",
-        "MADRASAH TSANAWIYAH PUTR",
-        "MADRASAH ALIYAH PUTRA",
-        "MADRASAH ALIYAH PUTRI"
-      ]
+    "lembaga": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::lembaga.lembaga",
+      "inversedBy": "santris"
     },
     "foto": {
       "type": "media",
@@ -92,6 +85,12 @@
       "relation": "oneToMany",
       "target": "api::pelanggaran.pelanggaran",
       "mappedBy": "santri"
+    },
+    "kehadiran_santri": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::kehadiran-santri.kehadiran-santri",
+      "mappedBy": "nama"
     }
   }
 }

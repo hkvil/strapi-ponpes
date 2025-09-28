@@ -27,7 +27,7 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::tahun-ajaran.tahun-ajaran",
-      "inversedBy": "riwayat_kelas"
+      "inversedBy": "riwayatKelas"
     },
     "statusSantri": {
       "type": "enumeration",

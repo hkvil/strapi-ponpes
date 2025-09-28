@@ -402,6 +402,38 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiDonasiDonasi extends Struct.CollectionTypeSchema {
+  collectionName: 'donasis';
+  info: {
+    displayName: 'Donasi';
+    pluralName: 'donasis';
+    singularName: 'donasi';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    deadline: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::donasi.donasi'
+    > &
+      Schema.Attribute.Private;
+    media: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    publishedAt: Schema.Attribute.DateTime;
+    target: Schema.Attribute.BigInteger;
+    terkumpul: Schema.Attribute.BigInteger;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -434,6 +466,70 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiKehadiranGuruKehadiranGuru
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'kehadiran_gurus';
+  info: {
+    displayName: 'Kehadiran Guru';
+    pluralName: 'kehadiran-gurus';
+    singularName: 'kehadiran-guru';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
+    keterangan: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kehadiran-guru.kehadiran-guru'
+    > &
+      Schema.Attribute.Private;
+    nama: Schema.Attribute.Relation<'manyToOne', 'api::staff.staff'>;
+    publishedAt: Schema.Attribute.DateTime;
+    tanggal: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiKehadiranSantriKehadiranSantri
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'kehadiran_santris';
+  info: {
+    displayName: 'Kehadiran Santri';
+    pluralName: 'kehadiran-santris';
+    singularName: 'kehadiran-santri';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
+    keterangan: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kehadiran-santri.kehadiran-santri'
+    > &
+      Schema.Attribute.Private;
+    nama: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
+    publishedAt: Schema.Attribute.DateTime;
+    tanggal: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
   collectionName: 'kelass';
   info: {
@@ -448,6 +544,14 @@ export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    kehadiran_guru: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kehadiran-guru.kehadiran-guru'
+    >;
+    kehadiran_santri: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kehadiran-santri.kehadiran-santri'
+    >;
     label: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::kelas.kelas'> &
@@ -499,7 +603,9 @@ export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
     profilMd: Schema.Attribute.RichText;
     programKerjaMd: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
+    santris: Schema.Attribute.Relation<'oneToMany', 'api::santri.santri'>;
     slug: Schema.Attribute.UID<'nama'>;
+    staffs: Schema.Attribute.Relation<'oneToMany', 'api::staff.staff'>;
     topBanner: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -673,26 +779,19 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
     foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     gender: Schema.Attribute.Enumeration<['L', 'P']>;
     kecamatan: Schema.Attribute.String;
+    kehadiran_santri: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kehadiran-santri.kehadiran-santri'
+    >;
     kelurahan: Schema.Attribute.String;
     kota: Schema.Attribute.String;
+    lembaga: Schema.Attribute.Relation<'manyToOne', 'api::lembaga.lembaga'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::santri.santri'
     > &
       Schema.Attribute.Private;
-    madrasah: Schema.Attribute.Enumeration<
-      [
-        'TAMAN KANAK-KANAK',
-        'TAMAN PENDIDIKAN AL-QUR`AN',
-        'MADRASAH DINIYAH',
-        'MADRASAH IBTIDAIYAH',
-        'MADRASAH TSANAWIYAH PUTRA',
-        'MADRASAH TSANAWIYAH PUTR',
-        'MADRASAH ALIYAH PUTRA',
-        'MADRASAH ALIYAH PUTRI',
-      ]
-    >;
     nama: Schema.Attribute.String;
     namaAyah: Schema.Attribute.String;
     namaIbu: Schema.Attribute.String;
@@ -769,7 +868,12 @@ export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
     kategoriPersonil: Schema.Attribute.Enumeration<
       ['GURU', 'PENGURUS', 'STAFF']
     >;
+    kehadiran: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kehadiran-guru.kehadiran-guru'
+    >;
     keteranganTugas: Schema.Attribute.Text;
+    lembaga: Schema.Attribute.Relation<'manyToOne', 'api::lembaga.lembaga'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::staff.staff'> &
       Schema.Attribute.Private;
@@ -789,55 +893,6 @@ export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
     statusPNS: Schema.Attribute.Boolean;
     tanggalLahir: Schema.Attribute.Date;
     tempatLahir: Schema.Attribute.String;
-    unit: Schema.Attribute.Enumeration<
-      [
-        'Pusat Kepegawaian dan Pengawasan  ',
-        'Pusat Pengawasan dan Pembinaan SDM Putri  ',
-        'Pusat Penjaminan Mutu Pendidikan dan Pengajaran  ',
-        'Taman Kanak-Kanak  ',
-        'Taman Pendidikan Al-Qur\u2019an  ',
-        'Madrasah Diniyah  ',
-        'Madrasah Ibtidaiyah  ',
-        'Madrasah Tsanawiyah Putra  ',
-        'Madrasah Tsanawiyah Putri  ',
-        'Madrasah Aliyah Putra  ',
-        'Madrasah Aliyah Putri  ',
-        'Madrasah Tahfizh Lil Athfal  ',
-        'Institut Mujahadah dan Pembibitan  ',
-        'Haromain  ',
-        'Al Ittifaqiah Language Center  ',
-        'LEMTATIQHI PA  ',
-        'LEMTATIQHI PI  ',
-        'LEBAH Putra  ',
-        'LEBAH Putri  ',
-        'LESGATRAM Putra  ',
-        'LESGATRAM Putri  ',
-        'Lembaga Muhadhoroh Putra  ',
-        'Lembaga Muhadhoroh Putri  ',
-        'LEMKAKIKU  ',
-        'LEMKAPPI  ',
-        'LERASI_LOGINTARU  ',
-        'LK2PPI  ',
-        'DATSUHBINOSPI Putra  ',
-        'DATSUHBINOSPI Putri  ',
-        'Biro Pengkaderan, Beasiswa dan Kerjasama  ',
-        'ADKEU  ',
-        'BIDDAPPMASSUL  ',
-        'Bidang Kebersihan, Perairan, Pertamanan dan Lingkungan Hidup  ',
-        'Bidang Sarana Prasarana, Perlistrikan dan Transportasi  ',
-        'KESLOGMESS  ',
-        'Klinik  ',
-        'Bidang Keamanan, Ketertiban  ',
-        'Hubungan Masyarakat dan Protokol  ',
-        'IWAPPI  ',
-        'PUSPAMAYA  ',
-        'PUSDEM  ',
-        'Avicenna Institute  ',
-        'PUSDAP  ',
-        'PBHU  ',
-        'LPBI  ',
-      ]
-    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -866,7 +921,7 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    riwayat_kelas: Schema.Attribute.Relation<
+    riwayatKelas: Schema.Attribute.Relation<
       'oneToMany',
       'api::riwayat-kelas.riwayat-kelas'
     >;
@@ -1388,7 +1443,10 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
+      'api::donasi.donasi': ApiDonasiDonasi;
       'api::global.global': ApiGlobalGlobal;
+      'api::kehadiran-guru.kehadiran-guru': ApiKehadiranGuruKehadiranGuru;
+      'api::kehadiran-santri.kehadiran-santri': ApiKehadiranSantriKehadiranSantri;
       'api::kelas.kelas': ApiKelasKelas;
       'api::lembaga.lembaga': ApiLembagaLembaga;
       'api::pelanggaran.pelanggaran': ApiPelanggaranPelanggaran;

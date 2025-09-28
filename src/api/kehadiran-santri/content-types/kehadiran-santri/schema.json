@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "kehadiran_santris",
+  "info": {
+    "singularName": "kehadiran-santri",
+    "pluralName": "kehadiran-santris",
+    "displayName": "Kehadiran Santri"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nama": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::santri.santri",
+      "inversedBy": "kehadiran_santri"
+    },
+    "tanggal": {
+      "type": "date"
+    },
+    "kelas": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kelas.kelas",
+      "inversedBy": "kehadiran_santri"
+    },
+    "keterangan": {
+      "type": "text"
+    }
+  }
+}
