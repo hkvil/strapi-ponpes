@@ -492,8 +492,8 @@ export interface ApiKehadiranGuruKehadiranGuru
       'api::kehadiran-guru.kehadiran-guru'
     > &
       Schema.Attribute.Private;
-    namaStaff: Schema.Attribute.Relation<'manyToOne', 'api::staff.staff'>;
     publishedAt: Schema.Attribute.DateTime;
+    staff: Schema.Attribute.Relation<'manyToOne', 'api::staff.staff'>;
     tanggal: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -527,8 +527,8 @@ export interface ApiKehadiranSantriKehadiranSantri
       'api::kehadiran-santri.kehadiran-santri'
     > &
       Schema.Attribute.Private;
-    namaSantri: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
     publishedAt: Schema.Attribute.DateTime;
+    santri: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
     tanggal: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -818,8 +818,8 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
       'api::tahun-ajaran.tahun-ajaran'
     >;
     tahunIjazah: Schema.Attribute.String;
-    tahunLulus: Schema.Attribute.Integer;
-    tahunMasuk: Schema.Attribute.Integer;
+    tahunLulus: Schema.Attribute.String;
+    tahunMasuk: Schema.Attribute.String;
     tanggalLahir: Schema.Attribute.Date;
     tempatLahir: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -928,6 +928,7 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    label: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -942,9 +943,7 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
     santris: Schema.Attribute.Relation<'oneToMany', 'api::santri.santri'>;
     semester: Schema.Attribute.Enumeration<['GANJIL', 'GENAP']> &
       Schema.Attribute.Required;
-    tahunAjaran: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    tahunAjaran: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

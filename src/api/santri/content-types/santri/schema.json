@@ -65,9 +65,6 @@
     "nomorIjazah": {
       "type": "string"
     },
-    "tahunIjazah": {
-      "type": "string"
-    },
     "riwayatKelas": {
       "type": "relation",
       "relation": "oneToMany",
@@ -90,7 +87,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::kehadiran-santri.kehadiran-santri",
-      "mappedBy": "namaSantri"
+      "mappedBy": "santri"
     },
     "kelasAktif": {
       "type": "relation",
@@ -104,15 +101,18 @@
       "target": "api::tahun-ajaran.tahun-ajaran",
       "inversedBy": "santris"
     },
-    "tahunMasuk": {
-      "type": "integer"
-    },
-    "tahunLulus": {
-      "type": "integer"
-    },
     "isAlumni": {
       "type": "boolean",
       "default": false
+    },
+    "tahunIjazah": {
+      "type": "string"
+    },
+    "tahunMasuk": {
+      "type": "string"
+    },
+    "tahunLulus": {
+      "type": "string"
     }
   }
 }

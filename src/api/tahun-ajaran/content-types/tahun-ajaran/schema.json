@@ -11,10 +11,13 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "label": {
+      "type": "string"
+    },
     "tahunAjaran": {
       "type": "string",
       "required": true,
-      "unique": true,
+      "unique": false,
       "regex": "^\\d{4}/\\d{4}$"
     },
     "semester": {

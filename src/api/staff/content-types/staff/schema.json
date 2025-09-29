@@ -99,7 +99,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::kehadiran-guru.kehadiran-guru",
-      "mappedBy": "namaStaff"
+      "mappedBy": "staff"
     }
   }
 }

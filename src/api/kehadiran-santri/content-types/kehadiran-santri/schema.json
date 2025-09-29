@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "namaSantri": {
+    "santri": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::santri.santri",

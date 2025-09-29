@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "namaStaff": {
+    "staff": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::staff.staff",

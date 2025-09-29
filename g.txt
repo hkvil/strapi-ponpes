@@ -1,0 +1,39 @@
+ChatGPT said:
+
+Singkatnya: buat master dulu → baru data santri → lalu riwayat.
+
+Urutan yang paling aman (disarankan)
+
+Tahun Ajaran
+
+Buat record TA yang aktif (mis. 2024/2025, semester=GANJIL, aktif=true).
+
+Lembaga (kalau dipakai membedakan unit)
+
+Minimal: nama, slug.
+
+Kelas
+
+Tiap rombel harus ada dulu.
+
+Field minimal: nama/kelas, kode (unique), lembaga, (opsional) tingkat, rombel.
+
+(Opsional) relasi ke TA aktif jika kelas spesifik per TA.
+
+Santri
+
+Input identitas + lembaga.
+
+Belum perlu isi kelasAktif (biar lifecycle yang set).
+
+Riwayat Kelas (pertama)
+
+Buat riwayat-kelas untuk setiap santri: isi santri, kelas, tahunAjaran (yang aktif), statusSantri=AKTIF, tanggalMulai=today.
+
+Lifecycle akan:
+
+set santri.kelasAktif = kelas tsb,
+
+set santri.tahunAjaranAktif,
+
+auto-isi tahunMasuk jika kosong.
