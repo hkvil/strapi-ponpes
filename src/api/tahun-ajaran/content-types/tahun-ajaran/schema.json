@@ -12,23 +12,35 @@
   "pluginOptions": {},
   "attributes": {
     "tahunAjaran": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "regex": "^\\d{4}/\\d{4}$"
     },
     "semester": {
       "type": "enumeration",
+      "required": true,
       "enum": [
         "GANJIL",
         "GENAP"
       ]
     },
     "aktif": {
-      "type": "boolean"
+      "type": "boolean",
+      "required": true,
+      "default": false
     },
     "riwayatKelas": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::riwayat-kelas.riwayat-kelas",
       "mappedBy": "tahunAjaran"
+    },
+    "santris": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::santri.santri",
+      "mappedBy": "tahunAjaranAktif"
     }
   }
 }

@@ -481,6 +481,9 @@ export interface ApiKehadiranGuruKehadiranGuru
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    jenis: Schema.Attribute.Enumeration<
+      ['IZIN', 'ALPHA', 'TERLAMBAT', 'SAKIT', 'HADIR']
+    >;
     kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
     keterangan: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -489,7 +492,7 @@ export interface ApiKehadiranGuruKehadiranGuru
       'api::kehadiran-guru.kehadiran-guru'
     > &
       Schema.Attribute.Private;
-    nama: Schema.Attribute.Relation<'manyToOne', 'api::staff.staff'>;
+    namaStaff: Schema.Attribute.Relation<'manyToOne', 'api::staff.staff'>;
     publishedAt: Schema.Attribute.DateTime;
     tanggal: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;
@@ -513,6 +516,9 @@ export interface ApiKehadiranSantriKehadiranSantri
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    jenis: Schema.Attribute.Enumeration<
+      ['IZIN', 'ALPHA', 'TERLAMBAT', 'SAKIT', 'HADIR']
+    >;
     kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
     keterangan: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -521,7 +527,7 @@ export interface ApiKehadiranSantriKehadiranSantri
       'api::kehadiran-santri.kehadiran-santri'
     > &
       Schema.Attribute.Private;
-    nama: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
+    namaSantri: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
     publishedAt: Schema.Attribute.DateTime;
     tanggal: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;
@@ -552,7 +558,7 @@ export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::kehadiran-santri.kehadiran-santri'
     >;
-    label: Schema.Attribute.String;
+    kelas: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::kelas.kelas'> &
       Schema.Attribute.Private;
@@ -561,10 +567,7 @@ export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::riwayat-kelas.riwayat-kelas'
     >;
-    rombel: Schema.Attribute.String;
-    tingkat: Schema.Attribute.Enumeration<
-      ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
-    >;
+    santris: Schema.Attribute.Relation<'oneToMany', 'api::santri.santri'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -586,12 +589,12 @@ export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    files: Schema.Attribute.Component<'files.files', true>;
     frontImages: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
     images: Schema.Attribute.Component<'profil.image-item', true>;
-    infos: Schema.Attribute.Component<'profil.berita', true>;
     kontak: Schema.Attribute.Component<'kontak.kontak', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -600,6 +603,7 @@ export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     nama: Schema.Attribute.String;
+    news: Schema.Attribute.Component<'profil.berita', true>;
     profilMd: Schema.Attribute.RichText;
     programKerjaMd: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
@@ -778,11 +782,13 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     gender: Schema.Attribute.Enumeration<['L', 'P']>;
+    isAlumni: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     kecamatan: Schema.Attribute.String;
     kehadiran_santri: Schema.Attribute.Relation<
       'oneToMany',
       'api::kehadiran-santri.kehadiran-santri'
     >;
+    kelasAktif: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
     kelurahan: Schema.Attribute.String;
     kota: Schema.Attribute.String;
     lembaga: Schema.Attribute.Relation<'manyToOne', 'api::lembaga.lembaga'>;
@@ -807,7 +813,13 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::riwayat-kelas.riwayat-kelas'
     >;
+    tahunAjaranAktif: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::tahun-ajaran.tahun-ajaran'
+    >;
     tahunIjazah: Schema.Attribute.String;
+    tahunLulus: Schema.Attribute.Integer;
+    tahunMasuk: Schema.Attribute.Integer;
     tanggalLahir: Schema.Attribute.Date;
     tempatLahir: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -910,7 +922,9 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    aktif: Schema.Attribute.Boolean;
+    aktif: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -925,8 +939,12 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::riwayat-kelas.riwayat-kelas'
     >;
-    semester: Schema.Attribute.Enumeration<['GANJIL', 'GENAP']>;
-    tahunAjaran: Schema.Attribute.String;
+    santris: Schema.Attribute.Relation<'oneToMany', 'api::santri.santri'>;
+    semester: Schema.Attribute.Enumeration<['GANJIL', 'GENAP']> &
+      Schema.Attribute.Required;
+    tahunAjaran: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

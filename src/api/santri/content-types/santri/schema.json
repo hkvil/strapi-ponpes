@@ -90,7 +90,29 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::kehadiran-santri.kehadiran-santri",
-      "mappedBy": "nama"
+      "mappedBy": "namaSantri"
+    },
+    "kelasAktif": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::kelas.kelas",
+      "inversedBy": "santris"
+    },
+    "tahunAjaranAktif": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tahun-ajaran.tahun-ajaran",
+      "inversedBy": "santris"
+    },
+    "tahunMasuk": {
+      "type": "integer"
+    },
+    "tahunLulus": {
+      "type": "integer"
+    },
+    "isAlumni": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

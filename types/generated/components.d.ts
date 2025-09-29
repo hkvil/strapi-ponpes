@@ -1,5 +1,16 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface FilesFiles extends Struct.ComponentSchema {
+  collectionName: 'components_files_files';
+  info: {
+    displayName: 'files';
+  };
+  attributes: {
+    nama: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface KontakKontak extends Struct.ComponentSchema {
   collectionName: 'components_kontak_kontaks';
   info: {
@@ -153,6 +164,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'files.files': FilesFiles;
       'kontak.kontak': KontakKontak;
       'profil.berita': ProfilBerita;
       'profil.files': ProfilFiles;

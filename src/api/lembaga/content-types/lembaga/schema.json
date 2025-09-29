@@ -69,9 +69,14 @@
       "component": "kontak.kontak",
       "repeatable": true
     },
-    "infos": {
+    "news": {
       "type": "component",
       "component": "profil.berita",
+      "repeatable": true
+    },
+    "files": {
+      "type": "component",
+      "component": "files.files",
       "repeatable": true
     },
     "santris": {

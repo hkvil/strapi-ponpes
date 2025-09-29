@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "nama": {
+    "namaSantri": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::santri.santri",
@@ -28,6 +28,16 @@
     },
     "keterangan": {
       "type": "text"
+    },
+    "jenis": {
+      "type": "enumeration",
+      "enum": [
+        "IZIN",
+        "ALPHA",
+        "TERLAMBAT",
+        "SAKIT",
+        "HADIR"
+      ]
     }
   }
 }

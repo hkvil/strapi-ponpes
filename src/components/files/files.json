@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_files_files",
+  "info": {
+    "displayName": "files"
+  },
+  "options": {},
+  "attributes": {
+    "nama": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

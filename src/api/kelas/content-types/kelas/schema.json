@@ -11,27 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "tingkat": {
-      "type": "enumeration",
-      "enum": [
-        "I",
-        "II",
-        "III",
-        "IV",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII"
-      ]
-    },
-    "rombel": {
-      "type": "string"
-    },
-    "label": {
+    "kelas": {
       "type": "string"
     },
     "riwayatKelas": {
@@ -51,6 +31,12 @@
       "relation": "oneToMany",
       "target": "api::kehadiran-santri.kehadiran-santri",
       "mappedBy": "kelas"
+    },
+    "santris": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::santri.santri",
+      "mappedBy": "kelasAktif"
     }
   }
 }
