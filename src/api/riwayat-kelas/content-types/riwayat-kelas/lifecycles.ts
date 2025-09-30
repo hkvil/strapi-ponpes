@@ -97,11 +97,14 @@ export default {
         fields: ['id'],
       });
 
+      console.log('🔍 Debug riwayatTerbaru:', JSON.stringify(riwayatTerbaru, null, 2));
+
       // 3. Sinkronisasi shortcut di santri
       const santriUpdateData: any = {};
       
       // kelasAktif = kelas dari riwayat terbaru
       const kelasId = (riwayatTerbaru as any)?.kelas?.id;
+      console.log('🔍 Debug kelasId:', kelasId);
       if (kelasId) {
         santriUpdateData.kelasAktif = { connect: [{ id: kelasId }] };
       }

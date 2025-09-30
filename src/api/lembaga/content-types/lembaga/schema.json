@@ -90,6 +90,12 @@
       "relation": "oneToMany",
       "target": "api::staff.staff",
       "mappedBy": "lembaga"
+    },
+    "kelas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::kelas.kelas",
+      "mappedBy": "lembaga"
     }
   }
 }

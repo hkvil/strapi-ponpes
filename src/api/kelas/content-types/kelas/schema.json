@@ -12,7 +12,14 @@
   "pluginOptions": {},
   "attributes": {
     "kelas": {
-      "type": "string"
+      "type": "string",
+      "required": true
+    },
+    "lembaga": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::lembaga.lembaga",
+      "inversedBy": "kelas"
     },
     "riwayatKelas": {
       "type": "relation",

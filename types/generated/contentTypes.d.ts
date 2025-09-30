@@ -558,7 +558,8 @@ export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::kehadiran-santri.kehadiran-santri'
     >;
-    kelas: Schema.Attribute.String;
+    kelas: Schema.Attribute.String & Schema.Attribute.Required;
+    lembaga: Schema.Attribute.Relation<'manyToOne', 'api::lembaga.lembaga'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::kelas.kelas'> &
       Schema.Attribute.Private;
@@ -595,6 +596,7 @@ export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
       true
     >;
     images: Schema.Attribute.Component<'profil.image-item', true>;
+    kelas: Schema.Attribute.Relation<'oneToMany', 'api::kelas.kelas'>;
     kontak: Schema.Attribute.Component<'kontak.kontak', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
