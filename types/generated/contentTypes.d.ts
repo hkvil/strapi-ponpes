@@ -410,7 +410,7 @@ export interface ApiDonasiDonasi extends Struct.CollectionTypeSchema {
     singularName: 'donasi';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -475,7 +475,7 @@ export interface ApiKehadiranGuruKehadiranGuru
     singularName: 'kehadiran-guru';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -510,7 +510,7 @@ export interface ApiKehadiranSantriKehadiranSantri
     singularName: 'kehadiran-santri';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -544,7 +544,7 @@ export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
     singularName: 'kelas';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -582,7 +582,7 @@ export interface ApiLembagaLembaga extends Struct.CollectionTypeSchema {
     singularName: 'lembaga';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     botBanner: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
@@ -626,7 +626,7 @@ export interface ApiPelanggaranPelanggaran extends Struct.CollectionTypeSchema {
     singularName: 'pelanggaran';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -659,7 +659,7 @@ export interface ApiPrestasiDanPenghargaanPesantrenPrestasiDanPenghargaanPesantr
     singularName: 'prestasi-dan-penghargaan-pesantren';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     content: Schema.Attribute.RichText;
@@ -689,7 +689,7 @@ export interface ApiPrestasiPrestasi extends Struct.CollectionTypeSchema {
     singularName: 'prestasi';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     bidang: Schema.Attribute.String;
@@ -735,7 +735,7 @@ export interface ApiRiwayatKelasRiwayatKelas
     singularName: 'riwayat-kelas';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     catatan: Schema.Attribute.Text;
@@ -774,7 +774,7 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
     singularName: 'santri';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -836,7 +836,7 @@ export interface ApiSliderSlider extends Struct.CollectionTypeSchema {
     singularName: 'slider';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -868,7 +868,7 @@ export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
     singularName: 'staff';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     agama: Schema.Attribute.Enumeration<['ISLAM']>;
@@ -919,7 +919,7 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
     singularName: 'tahun-ajaran';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     aktif: Schema.Attribute.Boolean &
