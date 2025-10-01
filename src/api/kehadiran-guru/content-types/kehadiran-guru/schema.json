@@ -26,6 +26,12 @@
       "target": "api::kelas.kelas",
       "inversedBy": "kehadiran_guru"
     },
+    "tahunAjaran": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tahun-ajaran.tahun-ajaran",
+      "inversedBy": "kehadiran_guru"
+    },
     "keterangan": {
       "type": "text"
     },

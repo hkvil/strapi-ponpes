@@ -39,11 +39,11 @@
       "target": "api::riwayat-kelas.riwayat-kelas",
       "mappedBy": "tahunAjaran"
     },
-    "santris": {
+    "kehadiran_guru": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::santri.santri",
-      "mappedBy": "tahunAjaranAktif"
+      "target": "api::kehadiran-guru.kehadiran-guru",
+      "mappedBy": "tahunAjaran"
     }
   }
 }

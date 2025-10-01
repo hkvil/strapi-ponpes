@@ -62,13 +62,17 @@ export default {
   async afterCreate(event) {
     const { result, params } = event as any;
 
-    const santriId: IdLike | undefined =
-      result?.santri?.id ?? result?.santri ?? extractRelId(params?.data?.santri);
-    const taId: IdLike | undefined =
-      result?.tahunAjaran?.id ?? result?.tahunAjaran ?? extractRelId(params?.data?.tahunAjaran);
+    console.log('🚀 afterCreate triggered');
+
+    // Ambil ID langsung dari params.data, bukan dari result
+    const santriId: IdLike | undefined = extractRelId(params?.data?.santri);
+    const taId: IdLike | undefined = extractRelId(params?.data?.tahunAjaran);
+    const kelasId: IdLike | undefined = extractRelId(params?.data?.kelas);
+    
+    console.log('🔍 Extracted - santriId:', santriId, 'taId:', taId, 'kelasId:', kelasId);
     
     if (!santriId || !taId) {
-      console.log('Skip afterCreate: santriId atau taId tidak ditemukan');
+      console.log('❌ Skip afterCreate: santriId atau taId tidak ditemukan');
       return;
     }
 
@@ -77,11 +81,10 @@ export default {
       const openRiwayatLama = await strapi.entityService.findMany('api::riwayat-kelas.riwayat-kelas', {
         filters: {
           santri: { id: santriId },
-          ...(result?.id ? { id: { $ne: result.id } } : {}), // kecuali record baru ini
-          tanggalSelesai: { $null: true }, // yang masih open
+          id: { $ne: result.id },
+          tanggalSelesai: { $null: true },
         },
         fields: ['id'],
-        limit: 1000,
       });
       
       const today = new Date().toISOString().slice(0, 10);
@@ -89,29 +92,46 @@ export default {
         await strapi.entityService.update('api::riwayat-kelas.riwayat-kelas', riwayat.id, {
           data: { tanggalSelesai: today },
         });
+        console.log('✅ Closed old riwayat:', riwayat.id);
       }
 
-      // 2. Ambil riwayat kelas terbaru (yang baru saja dibuat) dengan relasi kelas
-      const riwayatTerbaru = await strapi.entityService.findOne('api::riwayat-kelas.riwayat-kelas', result.id, {
-        populate: { kelas: true, tahunAjaran: true },
-        fields: ['id'],
-      });
-
-      console.log('🔍 Debug riwayatTerbaru:', JSON.stringify(riwayatTerbaru, null, 2));
+      // 2. Ambil data kelas dan tahunAjaran untuk mendapatkan nama/string
+      console.log('🔍 Fetching kelas and tahunAjaran data');
+      
+      let kelasNama = null;
+      let tahunAjaranStr = null;
+      
+      if (kelasId) {
+        const kelasData = await strapi.entityService.findOne('api::kelas.kelas', kelasId as any, {
+          fields: ['kelas'],
+        });
+        kelasNama = kelasData?.kelas;
+        console.log('🔍 kelasNama:', kelasNama);
+      }
+      
+      if (taId) {
+        const tahunAjaranData = await strapi.entityService.findOne('api::tahun-ajaran.tahun-ajaran', taId as any, {
+          fields: ['tahunAjaran'],
+        });
+        tahunAjaranStr = tahunAjaranData?.tahunAjaran;
+        console.log('🔍 tahunAjaranStr:', tahunAjaranStr);
+      }
 
       // 3. Sinkronisasi shortcut di santri
       const santriUpdateData: any = {};
       
-      // kelasAktif = kelas dari riwayat terbaru
-      const kelasId = (riwayatTerbaru as any)?.kelas?.id;
-      console.log('🔍 Debug kelasId:', kelasId);
-      if (kelasId) {
-        santriUpdateData.kelasAktif = { connect: [{ id: kelasId }] };
+      // kelasAktif = nama kelas (string)
+      if (kelasNama) {
+        santriUpdateData.kelasAktif = kelasNama;
+        console.log('✅ Will set kelasAktif to:', kelasNama);
+      } else {
+        console.log('❌ No kelasNama found!');
       }
       
-      // tahunAjaranAktif = tahun ajaran dari riwayat terbaru
-      if (taId) {
-        santriUpdateData.tahunAjaranAktif = { connect: [{ id: taId }] };
+      // tahunAjaranAktif = string tahunAjaran (misal "2024/2025")
+      if (tahunAjaranStr) {
+        santriUpdateData.tahunAjaranAktif = tahunAjaranStr;
+        console.log('✅ Will set tahunAjaranAktif to:', tahunAjaranStr);
       }
 
       // tahunMasuk = kalau kosong, isi dari tahun awal tahunAjaran
@@ -119,23 +139,28 @@ export default {
         fields: ['tahunMasuk'],
       });
       
-      if (!santriCurrent?.tahunMasuk) {
-        const tahunAjaranStr = (riwayatTerbaru as any)?.tahunAjaran?.tahunAjaran;
-        if (tahunAjaranStr) {
-          santriUpdateData.tahunMasuk = tahunAwal(tahunAjaranStr);
-        }
+      console.log('🔍 Current santri tahunMasuk:', santriCurrent?.tahunMasuk);
+      
+      if (!santriCurrent?.tahunMasuk && tahunAjaranStr) {
+        santriUpdateData.tahunMasuk = tahunAwal(tahunAjaranStr);
+        console.log('✅ Will set tahunMasuk to:', santriUpdateData.tahunMasuk);
       }
+
+      console.log('🔍 Final santriUpdateData:', JSON.stringify(santriUpdateData, null, 2));
 
       // Update santri jika ada data yang perlu diupdate
       if (Object.keys(santriUpdateData).length > 0) {
-        await strapi.entityService.update('api::santri.santri', santriId as any, {
+        console.log('🔄 Updating santri with ID:', santriId);
+        const updatedSantri = await strapi.entityService.update('api::santri.santri', santriId as any, {
           data: santriUpdateData,
         });
-        console.log(`✅ Updated santri ${santriId} with kelasAktif: ${kelasId}, tahunAjaranAktif: ${taId}`);
+        console.log('✅ Santri updated successfully!');
+        console.log('🔍 Updated santri result:', JSON.stringify(updatedSantri, null, 2));
+      } else {
+        console.log('⚠️ No data to update');
       }
     } catch (error) {
       console.error('Error in afterCreate lifecycle:', error);
-      // Don't throw error to prevent blocking the main operation
     }
   },
 
@@ -147,7 +172,6 @@ export default {
     try {
       const updatedRiwayat = await strapi.entityService.findOne('api::riwayat-kelas.riwayat-kelas', updatedId as any, {
         populate: { tahunAjaran: true, santri: true },
-        fields: ['statusSantri'],
       });
       
       // 3. Tangani status lulus - Kalau statusSantri berubah jadi LULUS
@@ -168,15 +192,14 @@ export default {
       santriUpdateData.isAlumni = true;
       
       // Kosongkan kelasAktif & tahunAjaranAktif (karena sudah bukan siswa aktif)
-      santriUpdateData.kelasAktif = { disconnect: [] };
-      santriUpdateData.tahunAjaranAktif = { disconnect: [] };
+      santriUpdateData.kelasAktif = null;
+      santriUpdateData.tahunAjaranAktif = null;
 
       await strapi.entityService.update('api::santri.santri', santriId as any, {
         data: santriUpdateData,
       });
     } catch (error) {
       console.error('Error in afterUpdate lifecycle:', error);
-      // Don't throw error to prevent blocking the main operation
     }
   },
 };

@@ -20,10 +20,10 @@
     "tanggal": {
       "type": "date"
     },
-    "kelas": {
+    "riwayatKelas": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::kelas.kelas",
+      "target": "api::riwayat-kelas.riwayat-kelas",
       "inversedBy": "kehadiran_santri"
     },
     "keterangan": {

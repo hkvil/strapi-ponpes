@@ -494,6 +494,10 @@ export interface ApiKehadiranGuruKehadiranGuru
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     staff: Schema.Attribute.Relation<'manyToOne', 'api::staff.staff'>;
+    tahunAjaran: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::tahun-ajaran.tahun-ajaran'
+    >;
     tanggal: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -519,7 +523,6 @@ export interface ApiKehadiranSantriKehadiranSantri
     jenis: Schema.Attribute.Enumeration<
       ['IZIN', 'ALPHA', 'TERLAMBAT', 'SAKIT', 'HADIR']
     >;
-    kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
     keterangan: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -528,6 +531,10 @@ export interface ApiKehadiranSantriKehadiranSantri
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    riwayatKelas: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::riwayat-kelas.riwayat-kelas'
+    >;
     santri: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
     tanggal: Schema.Attribute.Date;
     updatedAt: Schema.Attribute.DateTime;
@@ -554,10 +561,6 @@ export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::kehadiran-guru.kehadiran-guru'
     >;
-    kehadiran_santri: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::kehadiran-santri.kehadiran-santri'
-    >;
     kelas: Schema.Attribute.String & Schema.Attribute.Required;
     lembaga: Schema.Attribute.Relation<'manyToOne', 'api::lembaga.lembaga'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -568,7 +571,6 @@ export interface ApiKelasKelas extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::riwayat-kelas.riwayat-kelas'
     >;
-    santris: Schema.Attribute.Relation<'oneToMany', 'api::santri.santri'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -744,6 +746,10 @@ export interface ApiRiwayatKelasRiwayatKelas
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    kehadiran_santri: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kehadiran-santri.kehadiran-santri'
+    >;
     kelas: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -790,7 +796,7 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::kehadiran-santri.kehadiran-santri'
     >;
-    kelasAktif: Schema.Attribute.Relation<'manyToOne', 'api::kelas.kelas'>;
+    kelasAktif: Schema.Attribute.String;
     kelurahan: Schema.Attribute.String;
     kota: Schema.Attribute.String;
     lembaga: Schema.Attribute.Relation<'manyToOne', 'api::lembaga.lembaga'>;
@@ -815,10 +821,7 @@ export interface ApiSantriSantri extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::riwayat-kelas.riwayat-kelas'
     >;
-    tahunAjaranAktif: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::tahun-ajaran.tahun-ajaran'
-    >;
+    tahunAjaranAktif: Schema.Attribute.String;
     tahunIjazah: Schema.Attribute.String;
     tahunLulus: Schema.Attribute.String;
     tahunMasuk: Schema.Attribute.String;
@@ -930,6 +933,10 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    kehadiran_guru: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::kehadiran-guru.kehadiran-guru'
+    >;
     label: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -942,7 +949,6 @@ export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::riwayat-kelas.riwayat-kelas'
     >;
-    santris: Schema.Attribute.Relation<'oneToMany', 'api::santri.santri'>;
     semester: Schema.Attribute.Enumeration<['GANJIL', 'GENAP']> &
       Schema.Attribute.Required;
     tahunAjaran: Schema.Attribute.String & Schema.Attribute.Required;

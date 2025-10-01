@@ -32,18 +32,6 @@
       "relation": "oneToMany",
       "target": "api::kehadiran-guru.kehadiran-guru",
       "mappedBy": "kelas"
-    },
-    "kehadiran_santri": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::kehadiran-santri.kehadiran-santri",
-      "mappedBy": "kelas"
-    },
-    "santris": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::santri.santri",
-      "mappedBy": "kelasAktif"
     }
   }
 }

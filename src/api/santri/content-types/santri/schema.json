@@ -90,16 +90,10 @@
       "mappedBy": "santri"
     },
     "kelasAktif": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::kelas.kelas",
-      "inversedBy": "santris"
+      "type": "string"
     },
     "tahunAjaranAktif": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::tahun-ajaran.tahun-ajaran",
-      "inversedBy": "santris"
+      "type": "string"
     },
     "isAlumni": {
       "type": "boolean",

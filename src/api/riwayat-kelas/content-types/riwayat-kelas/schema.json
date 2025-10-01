@@ -46,6 +46,12 @@
     },
     "catatan": {
       "type": "text"
+    },
+    "kehadiran_santri": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::kehadiran-santri.kehadiran-santri",
+      "mappedBy": "riwayatKelas"
     }
   }
 }

@@ -61,8 +61,9 @@ export default {
     if (result?.aktif === false) {
       try {
         // Cari santri yang masih menggunakan tahun ajaran ini sebagai tahunAjaranAktif
+        // Karena tahunAjaranAktif sekarang string, cari berdasarkan string tahunAjaran
         const santrisToUpdate = await strapi.entityService.findMany('api::santri.santri', {
-          filters: { tahunAjaranAktif: { id: result.id } },
+          filters: { tahunAjaranAktif: result.tahunAjaran },
           fields: ['id', 'nama'],
           limit: 1000,
         });
@@ -87,6 +88,13 @@ export default {
     const { where } = event.params as any;
     
     try {
+      // Ambil data tahun ajaran yang akan dihapus
+      const tahunAjaranToDelete = await strapi.entityService.findOne('api::tahun-ajaran.tahun-ajaran', where.id, {
+        fields: ['tahunAjaran'],
+      });
+
+      if (!tahunAjaranToDelete) return;
+
       // 1. Cek apakah ada riwayat kelas yang menggunakan tahun ajaran ini
       const riwayatKelas = await strapi.entityService.findMany('api::riwayat-kelas.riwayat-kelas', {
         filters: { tahunAjaran: { id: where.id } },
@@ -99,8 +107,9 @@ export default {
       }
 
       // 2. Cek apakah ada santri yang menggunakan sebagai tahunAjaranAktif
+      // Karena tahunAjaranAktif sekarang string, cari berdasarkan string tahunAjaran
       const santriAktif = await strapi.entityService.findMany('api::santri.santri', {
-        filters: { tahunAjaranAktif: { id: where.id } },
+        filters: { tahunAjaranAktif: tahunAjaranToDelete.tahunAjaran },
         fields: ['id'],
         limit: 1,
       });
