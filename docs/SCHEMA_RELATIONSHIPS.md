@@ -6,86 +6,101 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 
 ## 📊 Entity Relationship Diagram (ERD)
 
+### **Core Entities & Relationships**
+
 ```
-┌─────────────────────┐
-│     LEMBAGA         │◄────────┐
-│ - nama              │         │
-│ - slug              │         │
-│ - profilMd          │         │
-└──────┬──────────────┘         │
-       │ oneToMany              │
-       │                        │
-       ├────────────────────────┼──────────────┐
-       │                        │              │
-       ▼                        ▼              ▼
-┌──────────────┐      ┌─────────────────┐  ┌────────────┐
-│    KELAS     │      │     SANTRI      │  │   STAFF    │
-│ - kelas      │      │ - nama          │  │ - nama     │
-│              │      │ - nisn (unique) │  │ - nip      │
-└──────┬───────┘      │ - kelasAktif*   │  │ - aktif    │
-       │              │ - tahunAjaranAktif*│ - kategori │
-       │              │ - isAlumni*     │  └─────┬──────┘
-       │              │ - tahunMasuk    │        │
-       │              │ - tahunLulus*   │        │
-       │              └────┬─────┬──────┘        │
-       │                   │     │               │
-       │ oneToMany         │     │oneToMany      │
-       │                   │     │               │
-       ▼                   │     ▼               ▼
-┌──────────────────┐       │  ┌──────────────────────┐
-│  RIWAYAT-KELAS   │◄──────┘  │     PRESTASI         │
-│ - statusSantri   │          │ - namaLomba          │
-│ - tanggalMulai   │          │ - tingkat            │
-│ - tanggalSelesai │          │ - peringkat          │
-│ - catatan        │          └──────────────────────┘
-└────┬────┬────────┘          
-     │    │                   ┌──────────────────────┐
-     │    └──────────────────►│    PELANGGARAN       │
-     │                        │ - jenis              │
-     │                        │ - poin               │
-     │                        │ - tanggal            │
-     │                        └──────────────────────┘
-     │
-     │ oneToMany
-     │
-     ▼
-┌──────────────────────┐
-│  KEHADIRAN-SANTRI    │
-│ - tanggal            │
-│ - jenis              │
-│ - keterangan         │
-└──────────────────────┘
-
-
-┌─────────────────────┐
-│   TAHUN-AJARAN      │
-│ - tahunAjaran       │
-│ - semester          │
-│ - aktif (unique)    │
-└──────┬──────────────┘
-       │
-       ├─────────────────────┐
-       │ oneToMany           │
-       │                     │
-       ▼                     ▼
-┌──────────────────┐  ┌──────────────────┐
-│  RIWAYAT-KELAS   │  │  KEHADIRAN-GURU  │
-│  (linked above)  │  │ - tanggal        │
-└──────────────────┘  │ - jenis          │
-                      │ - keterangan     │
-                      └──────┬───────────┘
-                             │ manyToOne
-                             ▼
-                      ┌──────────────┐
-                      │    KELAS     │
-                      │ (linked above)│
-                      └──────────────┘
+                                    ┌─────────────────────────────┐
+                                    │        LEMBAGA              │
+                                    │  (Institution/Unit)         │
+                                    │─────────────────────────────│
+                                    │ + nama: string              │
+                                    │ + slug: string (unique)     │
+                                    │ + profilMd: richtext        │
+                                    │ + programKerjaMd: richtext  │
+                                    │ + frontImages: media[]      │
+                                    │ + kontak: component[]       │
+                                    └──────────┬──────────────────┘
+                                               │
+                         ┌─────────────────────┼─────────────────────┐
+                         │ oneToMany           │ oneToMany           │ oneToMany
+                         │                     │                     │
+                         ▼                     ▼                     ▼
+              ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+              │     KELAS        │  │     SANTRI       │  │      STAFF       │
+              │   (Class)        │  │   (Student)      │  │  (Teacher/Staff) │
+              │──────────────────│  │──────────────────│  │──────────────────│
+              │ + kelas: string  │  │ + nama: string   │  │ + nama: string   │
+              │ + lembaga ───────┼──┤ + nisn: string   │  │ + NIK: string    │
+              └────┬─────────────┘  │   (unique)       │  │ + nip: string    │
+                   │                │ + gender: L/P    │  │ + gender: L/P    │
+                   │                │ + lembaga ───────┼──┤ + lembaga        │
+                   │                │                  │  │ + kategori: enum │
+                   │                │ * kelasAktif     │  │ + aktif: boolean │
+                   │                │ * tahunAjaranAktif│ │ + statusKepegawaian│
+                   │                │ * isAlumni       │  │ + pendidikanTerakhir│
+                   │                │ * tahunMasuk     │  └────┬─────────────┘
+                   │                │ * tahunLulus     │       │
+                   │                └────┬─────┬───────┘       │
+                   │                     │     │               │
+                   │                     │     │oneToMany      │oneToMany
+                   │                     │     │               │
+                   │                     │     ▼               ▼
+                   │                     │  ┌──────────────────────┐
+                   │                     │  │     PRESTASI         │
+                   │ manyToOne           │  │  (Achievement)       │
+                   │                     │  │──────────────────────│
+                   ▼                     │  │ + namaLomba: string  │
+        ┌──────────────────────┐        │  │ + bidang: string     │
+        │   RIWAYAT-KELAS      │        │  │ + tingkat: enum      │
+        │  (Class History)     │◄───────┘  │ + peringkat: enum    │
+        │──────────────────────│ manyToOne │ + tahun: string      │
+        │ + santri ────────────┼──────┐    │ + santri ────────────┼─┐
+        │ + kelas ─────────────┼──┐   │    └──────────────────────┘ │
+        │ + tahunAjaran ───────┼─┐│   │                              │
+        │ + statusSantri: enum │ ││   │    ┌──────────────────────┐ │
+        │ + tanggalMulai: date │ ││   │    │    PELANGGARAN       │ │
+        │ + tanggalSelesai     │ ││   │    │    (Violation)       │ │
+        │ + catatan: text      │ ││   │    │──────────────────────│ │
+        └────┬─────────────────┘ ││   │    │ + jenis: string      │ │
+             │                   ││   │    │ + poin: integer      │ │
+             │oneToMany          ││   │    │ + tanggal: date      │ │
+             │                   ││   │    │ + keterangan: text   │ │
+             ▼                   ││   │    │ + santri ────────────┼─┘
+        ┌──────────────────────┐││   │    └──────────────────────┘
+        │  KEHADIRAN-SANTRI    │││   │
+        │ (Student Attendance) │││   │    ┌──────────────────────┐
+        │──────────────────────│││   └────│  KEHADIRAN-GURU      │
+        │ + santri ────────────┼┘│        │ (Teacher Attendance) │
+        │ + riwayatKelas ──────┼─┘        │──────────────────────│
+        │ + tanggal: date      │          │ + staff ─────────────┼─┐
+        │ + jenis: enum        │          │ + kelas ─────────────┼─┼─┐
+        │ + keterangan: text   │          │ + tahunAjaran ───────┼┐│ │
+        └──────────────────────┘          │ + tanggal: date      │││ │
+                                          │ + jenis: enum        │││ │
+                                          │ + keterangan: text   │││ │
+                                          └──────────────────────┘││ │
+                                                                  ││ │
+                                          ┌──────────────────────┐││ │
+                                          │   TAHUN-AJARAN       │││ │
+                                          │  (Academic Year)     │││ │
+                                          │──────────────────────│││ │
+                                          │ + tahunAjaran: string│││ │
+                                          │   (YYYY/YYYY)        ││└─┤
+                                          │ + semester: enum     ││  │
+                                          │   (GANJIL/GENAP)     │└──┤
+                                          │ + aktif: boolean     │   │
+                                          │ + label: string      │   │
+                                          └──────────────────────┘   │
+                                                    ▲                │
+                                                    └────────────────┘
 ```
 
 **Legend**:
-- `*` = Auto-populated by lifecycle (jangan edit manual)
-- `─►` = Relation
-- `unique` = Nilai harus unik di database
+- `─►` = One-to-Many Relationship
+- `◄─` = Many-to-One Relationship  
+- `*` = Auto-populated field (managed by lifecycle, JANGAN EDIT MANUAL)
+- `+` = Regular field
+- `(unique)` = Unique constraint
 
 ---
 
@@ -131,26 +146,33 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Attributes**:
 ```typescript
 {
+  // Identitas Dasar
   nama: string;
   nisn: string (unique);
   gender: enum ['L', 'P'];
   tempatLahir: string;
   tanggalLahir: date;
+  foto: media;
+  
+  // Data Keluarga
   namaAyah: string;
   namaIbu: string;
+  
+  // Alamat
   kelurahan: string;
   kecamatan: string;
   kota: string;
+  
+  // Data Akademik
   nomorIjazah: string;
   tahunIjazah: string;
-  foto: media;
   
-  // AUTO-POPULATED (Shortcut fields)
-  kelasAktif: string;
-  tahunAjaranAktif: string;
+  // AUTO-POPULATED (Shortcut fields - JANGAN EDIT MANUAL)
+  kelasAktif: string;           // e.g., "Kelas 7A"
+  tahunAjaranAktif: string;     // e.g., "2024/2025"
   isAlumni: boolean (default: false);
-  tahunMasuk: string;
-  tahunLulus: string;
+  tahunMasuk: string;           // e.g., "2024"
+  tahunLulus: string;           // e.g., "2027"
 }
 ```
 
@@ -164,8 +186,10 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Lifecycle**: Managed by RiwayatKelas lifecycle
 
 **Notes**: 
-- **JANGAN EDIT** `kelasAktif`, `tahunAjaranAktif`, `isAlumni`, `tahunLulus`
-- Fields tersebut auto-update dari riwayat-kelas
+- **JANGAN EDIT MANUAL**: `kelasAktif`, `tahunAjaranAktif`, `isAlumni`, `tahunLulus`
+- Fields tersebut auto-update dari lifecycle riwayat-kelas
+- `nisn` harus unique untuk identifikasi unik santri
+- `tahunMasuk` diisi otomatis saat pertama kali create riwayat-kelas
 
 ---
 
@@ -176,16 +200,31 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Attributes**:
 ```typescript
 {
+  // Identitas Dasar
   nama: string;
+  NIK: string;
   nip: string;
   gender: enum ['L', 'P'];
   tempatLahir: string;
   tanggalLahir: date;
   agama: enum ['ISLAM'];
+  noTelepon: string;
+  namaIbu: string;
+  foto: media;
+  
+  // Data Kepegawaian
   kategoriPersonil: enum ['GURU', 'PENGURUS', 'STAFF'];
   keteranganTugas: text;
+  statusKepegawaian: enum ['PNS', 'GTY', 'GTTY', 'HONORER', 'KONTRAK'];
+  mulaiTugas: date;
   aktif: boolean;
-  foto: media;
+  statusPNS: boolean;
+  statusGuruTetap: boolean;
+  
+  // Data Pendidikan
+  pendidikanTerakhir: enum ['S1', 'S2', 'S3'];
+  lulusan: string;
+  sertifikasi: text;
 }
 ```
 
@@ -195,7 +234,12 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 
 **Lifecycle**: None
 
-**Notes**: Bisa aktif/non-aktif dengan field `aktif`
+**Notes**: 
+- Field `aktif` untuk tracking status guru/staff (aktif/non-aktif)
+- `NIK` = Nomor Induk Kependudukan (16 digit)
+- `nip` = Nomor Induk Pegawai (18 digit)
+- `statusKepegawaian` untuk klasifikasi kepegawaian
+- `statusPNS` dan `statusGuruTetap` untuk status khusus
 
 ---
 
@@ -230,7 +274,7 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Attributes**:
 ```typescript
 {
-  statusSantri: enum ['AKTIF', 'NAIK_KELAS', 'PINDAH', 'KELUAR', 'LULUS'];
+  statusSantri: enum ['AKTIF', 'LULUS', 'PINDAH', 'CUTI'];
   tanggalMulai: date;
   tanggalSelesai: date (nullable);
   catatan: text;
@@ -250,6 +294,8 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Notes**: 
 - **SOURCE OF TRUTH** untuk posisi santri di kelas
 - Satu santri bisa punya multiple riwayat (naik kelas tiap tahun)
+- `statusSantri` available values: 'AKTIF', 'LULUS', 'PINDAH', 'CUTI'
+- Status 'NAIK_KELAS' dan 'KELUAR' sudah dihapus dari enum
 
 ---
 
@@ -260,9 +306,9 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Attributes**:
 ```typescript
 {
-  tahunAjaran: string (required, regex: ^\d{4}/\d{4}$);
-  semester: enum ['Ganjil', 'Genap'];
-  aktif: boolean (default: false);
+  tahunAjaran: string (required, unique: false, regex: ^\d{4}/\d{4}$);
+  semester: enum ['GANJIL', 'GENAP'] (required);
+  aktif: boolean (required, default: false);
   label: string;
 }
 ```
@@ -276,8 +322,10 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 - ✅ **beforeDelete**: Cegah delete jika masih ada RiwayatKelas yang terkait
 
 **Notes**: 
-- **HANYA 1 tahun ajaran aktif** di satu waktu
-- Format: "2024/2025"
+- **HANYA 1 tahun ajaran aktif** di satu waktu (per kombinasi tahunAjaran + semester)
+- Format tahunAjaran: "2024/2025" (regex validated)
+- `semester` harus uppercase: 'GANJIL' atau 'GENAP'
+- `label` optional untuk display custom (e.g., "Semester Ganjil 2024/2025")
 
 ---
 
@@ -289,11 +337,11 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 ```typescript
 {
   namaLomba: string;
+  bidang: string;
   penyelenggara: string;
   tingkat: enum ['Sekolah', 'Kecamatan', 'Kabupaten/Kota', 'Provinsi', 'Nasional', 'Internasional'];
   peringkat: enum ['Juara 1', 'Juara 2', 'Juara 3', 'Harapan 1', 'Harapan 2', 'Harapan 3'];
-  bidang: string;
-  tahun: string;
+  tahun: string;  // e.g., "2024"
 }
 ```
 
@@ -302,7 +350,10 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 
 **Lifecycle**: None
 
-**Notes**: Linked directly to Santri (tidak per periode kelas)
+**Notes**: 
+- Linked directly to Santri (tidak per periode kelas)
+- `bidang` contoh: "Matematika", "IPA", "Olahraga", "Seni", "Tahfidz", "Bahasa"
+- `tahun` dalam format string untuk fleksibilitas (e.g., "2024", "2023/2024")
 
 ---
 
@@ -313,8 +364,8 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Attributes**:
 ```typescript
 {
-  jenis: string;
-  poin: integer;
+  jenis: string;         // e.g., "Terlambat", "Tidak memakai seragam"
+  poin: integer;         // Bobot pelanggaran
   tanggal: date;
   keterangan: text;
 }
@@ -325,7 +376,10 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 
 **Lifecycle**: None
 
-**Notes**: Linked directly to Santri (tidak per periode kelas)
+**Notes**: 
+- Linked directly to Santri (tidak per periode kelas)
+- `poin` digunakan untuk sistem poin pelanggaran
+- `jenis` contoh: "Terlambat", "Tidak pakai seragam", "Bolos", "Ribut di kelas"
 
 ---
 
@@ -337,7 +391,7 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 ```typescript
 {
   tanggal: date;
-  jenis: enum ['HADIR', 'SAKIT', 'IZIN', 'ALPHA'];
+  jenis: enum ['HADIR', 'SAKIT', 'IZIN', 'ALPHA', 'TERLAMBAT'];
   keterangan: text;
 }
 ```
@@ -352,6 +406,7 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Notes**: 
 - Linked to **Kelas + TahunAjaran** (bukan RiwayatKelas)
 - Satu guru bisa mengajar di multiple kelas
+- `jenis` order: HADIR, SAKIT, IZIN, ALPHA, TERLAMBAT
 
 ---
 
@@ -363,7 +418,7 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 ```typescript
 {
   tanggal: date;
-  jenis: enum ['HADIR', 'SAKIT', 'IZIN', 'ALPHA'];
+  jenis: enum ['HADIR', 'SAKIT', 'IZIN', 'ALPHA', 'TERLAMBAT'];
   keterangan: text;
 }
 ```
@@ -377,6 +432,7 @@ Dokumentasi lengkap struktur database, relasi antar entity, dan lifecycle hooks.
 **Notes**: 
 - Linked to **RiwayatKelas** (enrollment period)
 - Memastikan absensi tercatat per periode enrollment
+- `jenis` order: HADIR, SAKIT, IZIN, ALPHA, TERLAMBAT
 
 ---
 
@@ -607,6 +663,37 @@ santri.tahunAjaranAktif: "2024/2025" (string)
 
 - **[DATA_INPUT_WORKFLOW.md](./DATA_INPUT_WORKFLOW.md)** - Step-by-step input guide
 - **[API_QUERY_EXAMPLES.md](./API_QUERY_EXAMPLES.md)** - Query patterns for frontend
+
+---
+
+## 📝 Recent Schema Changes (October 1, 2025)
+
+### **Staff Entity - NEW FIELDS:**
+- ✅ Added `nip` (string) - Nomor Induk Pegawai (18 digit)
+- ✅ Added `NIK` (string) - Nomor Induk Kependudukan (16 digit)
+- ✅ Added `noTelepon` (string)
+- ✅ Added `namaIbu` (string)
+- ✅ Added `statusKepegawaian` (enum: PNS, GTY, GTTY, HONORER, KONTRAK)
+- ✅ Added `mulaiTugas` (date)
+- ✅ Added `pendidikanTerakhir` (enum: S1, S2, S3)
+- ✅ Added `lulusan` (string)
+- ✅ Added `statusPNS` (boolean)
+- ✅ Added `statusGuruTetap` (boolean)
+- ✅ Added `sertifikasi` (text)
+
+### **Riwayat-Kelas Entity - ENUM UPDATE:**
+- ❌ Removed `NAIK_KELAS` from statusSantri enum
+- ❌ Removed `KELUAR` from statusSantri enum
+- ✅ Current enum: ['AKTIF', 'LULUS', 'PINDAH', 'CUTI']
+
+### **Tahun-Ajaran Entity - ENUM UPDATE:**
+- ✅ Changed semester enum from 'Ganjil'/'Genap' to 'GANJIL'/'GENAP' (uppercase)
+- ✅ Made `semester` required field
+- ✅ Made `aktif` required field
+
+### **Kehadiran (Guru & Santri) - ENUM UPDATE:**
+- ✅ Added `TERLAMBAT` to jenis enum
+- ✅ Current enum: ['HADIR', 'SAKIT', 'IZIN', 'ALPHA', 'TERLAMBAT']
 
 ---
 

@@ -1,44 +1,217 @@
-# 🚀 Getting started with Strapi
+# 🏫 Strapi Ponpes Management System
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+Sistem Manajemen Pondok Pesantren berbasis Strapi CMS v5 dengan TypeScript dan SQLite.
 
-### `develop`
+## 📋 Daftar Isi
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+- [Features](#-features)
+- [Quick Start](#-quick-start)
+- [Documentation](#-documentation)
+- [Troubleshooting](#-troubleshooting)
+- [Learn More](#-learn-more)
 
-```
+---
+
+## ✨ Features
+
+- 🎓 **Multi-Lembaga**: Kelola TK, RA, MI, MTs, MA (Putra & Putri)
+- 👥 **Manajemen Santri**: Data lengkap dengan lifecycle tracking (aktif → alumni)
+- 👨‍🏫 **Manajemen Staff/Guru**: Termasuk NIK, NIP, dan status kepegawaian
+- 📊 **Prestasi & Pelanggaran**: Tracking pencapaian dan pelanggaran santri
+- ✅ **Kehadiran**: Sistem absensi untuk santri dan guru
+- 🏆 **Riwayat Kelas**: Historical tracking perpindahan kelas santri
+- 📅 **Tahun Ajaran**: Management tahun ajaran dengan status aktif
+- 🔄 **Auto Lifecycle**: Otomatis populate `kelasAktif`, `tahunAjaranAktif`, `isAlumni`
+- 🌱 **Seeder**: Generate ~8,200 sample records untuk development
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js >= 18.x
+- NPM >= 6.x
+- RAM >= 4GB (recommended)
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Run seeder (optional - untuk sample data)
+npm run seed:example
+
+# Start development server
 npm run develop
-# or
-yarn develop
 ```
 
-### `start`
+Server akan berjalan di: **http://localhost:1337**
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+### Default Admin
 
+Setelah setup pertama kali, buat admin user melalui:
 ```
-npm run start
-# or
-yarn start
-```
-
-### `build`
-
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
-npm run build
-# or
-yarn build
+http://localhost:1337/admin
 ```
 
-## ⚙️ Deployment
+---
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+## 📚 Documentation
+
+Dokumentasi lengkap tersedia di folder `/docs`:
+
+| File | Deskripsi |
+|------|-----------|
+| [SCHEMA_RELATIONSHIPS.md](docs/SCHEMA_RELATIONSHIPS.md) | Schema, relasi, dan ERD lengkap |
+| [API_ENDPOINTS.md](docs/API_ENDPOINTS.md) | Panduan lengkap API dengan contoh |
+| [POPULATE_ISSUE.md](docs/POPULATE_ISSUE.md) | ⚠️ **CRITICAL**: Jangan gunakan `populate=all`! |
+| [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | Solusi masalah umum |
+
+### ⚠️ IMPORTANT: API Populate Warning
+
+**JANGAN gunakan `populate=all`** - akan menyebabkan server stuck dan crash!
+
+```bash
+# ❌ DANGER - Server akan stuck!
+GET /api/lembagas?populate=all
+
+# ✅ SAFE - Gunakan selective populate
+GET /api/lembagas?populate[santris]=true
+```
+
+📖 **Detail lengkap**: [POPULATE_ISSUE.md](docs/POPULATE_ISSUE.md)
+
+### API Testing
+
+```bash
+# Test semua API endpoints (sudah safe, tanpa populate=all)
+.\scripts\test-api.ps1
+```
+
+---
+
+## 🔧 Troubleshooting
+
+Mengalami masalah? Check [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) untuk solusi:
+
+- ❌ JavaScript Heap Out of Memory → ✅ **Sudah diperbaiki** dengan `--max-old-space-size=4096`
+- ❌ 400 Bad Request pada filter → Check collection naming & filter syntax
+- ❌ Empty data response → Check `publishedAt` dan relasi
+- ❌ TypeScript compilation error → Check enum types
+
+**Quick Fix untuk Memory Issue:**
+```json
+// Sudah diterapkan di package.json
+"develop": "node --max-old-space-size=4096 node_modules/@strapi/strapi/bin/strapi.js develop"
+```
+
+---
+
+## 📖 Commands
+
+### Development
+
+```bash
+npm run develop          # Start dev server (autoReload enabled)
+npm run seed:example     # Run seeder untuk sample data
+```
+
+### Production
+
+```bash
+npm run build           # Build admin panel
+npm run start           # Start production server (autoReload disabled)
+```
+
+### Testing
+
+```bash
+.\scripts\test-api.ps1  # Test API endpoints (PowerShell)
+```
+
+### Strapi CLI
+
+```bash
+npm run strapi          # Strapi CLI commands
+npm run console         # Strapi console
+npm run deploy          # Deploy to Strapi Cloud
+```
+
+---
+
+## 🗄️ Database
+
+Project ini menggunakan **SQLite** untuk development:
+
+- **Location**: `.tmp/data.db`
+- **Records**: ~8,200 seeded records
+  - 50 Staff/Guru
+  - 200 Santri
+  - 100 Prestasi
+  - 80 Pelanggaran
+  - 7,500 Kehadiran (Santri + Guru)
+
+**Backup Database:**
+```bash
+# PowerShell
+Copy-Item .tmp/data.db .tmp/data.backup.db
+```
+
+---
+
+## 🏗️ Project Structure
 
 ```
-yarn strapi deploy
+my-strapi-project/
+├── config/              # Strapi configuration
+├── database/           # Database migrations
+├── data/               # Seed data (uploads, JSON)
+├── docs/               # Documentation
+│   ├── API_ENDPOINTS.md
+│   ├── SCHEMA_RELATIONSHIPS.md
+│   └── TROUBLESHOOTING.md
+├── scripts/            # Utility scripts
+│   ├── ponpes.seed.ts  # Main seeder
+│   └── test-api.ps1    # API testing script
+├── src/
+│   ├── api/           # API endpoints (10 entities)
+│   ├── admin/         # Admin panel customization
+│   ├── components/    # Reusable components
+│   └── index.ts       # Entry point
+└── public/            # Static files & uploads
 ```
+
+---
+
+## 🔌 API Endpoints
+
+Base URL: `http://localhost:1337/api`
+
+### Main Endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `/lembagas` | Lembaga pendidikan |
+| `/santris` | Data santri |
+| `/staffs` | Data staff/guru |
+| `/kelass` | Kelas (double s!) |
+| `/tahun-ajarans` | Tahun ajaran |
+| `/riwayat-kelass` | Riwayat kelas santri |
+| `/prestasis` | Prestasi santri |
+| `/pelanggarans` | Pelanggaran santri |
+| `/kehadiran-santris` | Kehadiran santri |
+| `/kehadiran-gurus` | Kehadiran guru |
+
+**Contoh Query:**
+```
+GET /api/santris?filters[lembaga][slug][$eq]=madrasah-aliyah-putri&filters[riwayatKelas][tahunAjaran][aktif][$eq]=true
+```
+
+📖 **Dokumentasi lengkap**: [API_ENDPOINTS.md](docs/API_ENDPOINTS.md)
+
+---
 
 ## 📚 Learn more
 

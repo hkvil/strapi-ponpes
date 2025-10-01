@@ -48,6 +48,9 @@
     "NIK": {
       "type": "string"
     },
+    "nip": {
+      "type": "string"
+    },
     "kategoriPersonil": {
       "type": "enumeration",
       "enum": [

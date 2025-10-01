@@ -899,6 +899,7 @@ export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
     nama: Schema.Attribute.String;
     namaIbu: Schema.Attribute.String;
     NIK: Schema.Attribute.String;
+    nip: Schema.Attribute.String;
     noTelepon: Schema.Attribute.String;
     pendidikanTerakhir: Schema.Attribute.Enumeration<['S1', 'S2', 'S3']>;
     publishedAt: Schema.Attribute.DateTime;
