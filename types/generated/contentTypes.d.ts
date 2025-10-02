@@ -402,6 +402,53 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiBannerMenuUtamaBannerMenuUtama
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'banner_menu_utamas';
+  info: {
+    displayName: 'Banner Menu Utama';
+    pluralName: 'banner-menu-utamas';
+    singularName: 'banner-menu-utama';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bottomBanner: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    isEnabled: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::banner-menu-utama.banner-menu-utama'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.Enumeration<
+      [
+        'PPI',
+        'YALQI',
+        'IAIQI',
+        'PANTI',
+        'BMT',
+        'BUMY',
+        'KOPERASI',
+        'PPDB',
+        'DONASI',
+        'INFORMASI',
+      ]
+    >;
+    topBanner: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDonasiDonasi extends Struct.CollectionTypeSchema {
   collectionName: 'donasis';
   info: {
@@ -1469,6 +1516,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
+      'api::banner-menu-utama.banner-menu-utama': ApiBannerMenuUtamaBannerMenuUtama;
       'api::donasi.donasi': ApiDonasiDonasi;
       'api::global.global': ApiGlobalGlobal;
       'api::kehadiran-guru.kehadiran-guru': ApiKehadiranGuruKehadiranGuru;

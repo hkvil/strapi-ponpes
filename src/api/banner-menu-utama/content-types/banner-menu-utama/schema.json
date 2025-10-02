@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "banner_menu_utamas",
+  "info": {
+    "singularName": "banner-menu-utama",
+    "pluralName": "banner-menu-utamas",
+    "displayName": "Banner Menu Utama"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "enumeration",
+      "enum": [
+        "PPI",
+        "YALQI",
+        "IAIQI",
+        "PANTI",
+        "BMT",
+        "BUMY",
+        "KOPERASI",
+        "PPDB",
+        "DONASI",
+        "INFORMASI"
+      ]
+    },
+    "topBanner": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "bottomBanner": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "isEnabled": {
+      "type": "boolean"
+    }
+  }
+}
