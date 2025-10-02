@@ -411,16 +411,16 @@ export interface ApiBannerMenuUtamaBannerMenuUtama
     singularName: 'banner-menu-utama';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     bottomBanner: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
-    >;
+    > &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    isEnabled: Schema.Attribute.Boolean;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -441,8 +441,12 @@ export interface ApiBannerMenuUtamaBannerMenuUtama
         'DONASI',
         'INFORMASI',
       ]
-    >;
-    topBanner: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    > &
+      Schema.Attribute.Required;
+    topBanner: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -507,6 +511,60 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiInformasiAlIttifaqiahInformasiAlIttifaqiah
+  extends Struct.SingleTypeSchema {
+  collectionName: 'informasi_al_ittifaqiahs';
+  info: {
+    displayName: 'Informasi Al Ittifaqiah';
+    pluralName: 'informasi-al-ittifaqiahs';
+    singularName: 'informasi-al-ittifaqiah';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    alumni: Schema.Attribute.Component<
+      'profil.jumlah-sdm-halaman-informasi',
+      true
+    >;
+    bluePrintISCI: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    galeriLuarNegeri: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    galeriTamu: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::informasi-al-ittifaqiah.informasi-al-ittifaqiah'
+    > &
+      Schema.Attribute.Private;
+    news: Schema.Attribute.Component<'profil.berita', true>;
+    profilMd: Schema.Attribute.RichText;
+    publishedAt: Schema.Attribute.DateTime;
+    santri: Schema.Attribute.Component<
+      'profil.jumlah-sdm-halaman-informasi',
+      true
+    >;
+    sdm: Schema.Attribute.Component<
+      'profil.jumlah-sdm-halaman-informasi',
+      true
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1519,6 +1577,7 @@ declare module '@strapi/strapi' {
       'api::banner-menu-utama.banner-menu-utama': ApiBannerMenuUtamaBannerMenuUtama;
       'api::donasi.donasi': ApiDonasiDonasi;
       'api::global.global': ApiGlobalGlobal;
+      'api::informasi-al-ittifaqiah.informasi-al-ittifaqiah': ApiInformasiAlIttifaqiahInformasiAlIttifaqiah;
       'api::kehadiran-guru.kehadiran-guru': ApiKehadiranGuruKehadiranGuru;
       'api::kehadiran-santri.kehadiran-santri': ApiKehadiranSantriKehadiranSantri;
       'api::kelas.kelas': ApiKelasKelas;

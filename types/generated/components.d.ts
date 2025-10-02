@@ -67,6 +67,18 @@ export interface ProfilImageItem extends Struct.ComponentSchema {
   };
 }
 
+export interface ProfilJumlahSdmHalamanInformasi
+  extends Struct.ComponentSchema {
+  collectionName: 'components_profil_jumlah_sdm_halaman_informasis';
+  info: {
+    displayName: 'Jumlah SDM Halaman Informasi';
+  };
+  attributes: {
+    jumlah: Schema.Attribute.String;
+    tahun: Schema.Attribute.String;
+  };
+}
+
 export interface ProfilProfil extends Struct.ComponentSchema {
   collectionName: 'components_profil_profils';
   info: {
@@ -169,6 +181,7 @@ declare module '@strapi/strapi' {
       'profil.berita': ProfilBerita;
       'profil.files': ProfilFiles;
       'profil.image-item': ProfilImageItem;
+      'profil.jumlah-sdm-halaman-informasi': ProfilJumlahSdmHalamanInformasi;
       'profil.profil': ProfilProfil;
       'profil.video-item': ProfilVideoItem;
       'program-kerja.program-kerja': ProgramKerjaProgramKerja;

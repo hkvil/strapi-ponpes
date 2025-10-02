@@ -7,12 +7,13 @@
     "displayName": "Banner Menu Utama"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "enumeration",
+      "required": true,
       "enum": [
         "PPI",
         "YALQI",
@@ -29,6 +30,7 @@
     "topBanner": {
       "type": "media",
       "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
@@ -39,15 +41,13 @@
     "bottomBanner": {
       "type": "media",
       "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
       ]
-    },
-    "isEnabled": {
-      "type": "boolean"
     }
   }
 }

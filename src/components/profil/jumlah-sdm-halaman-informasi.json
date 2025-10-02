@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_profil_jumlah_sdm_halaman_informasis",
+  "info": {
+    "displayName": "Jumlah SDM Halaman Informasi"
+  },
+  "options": {},
+  "attributes": {
+    "tahun": {
+      "type": "string"
+    },
+    "jumlah": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

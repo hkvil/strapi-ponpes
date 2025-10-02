@@ -1,0 +1,68 @@
+{
+  "kind": "singleType",
+  "collectionName": "informasi_al_ittifaqiahs",
+  "info": {
+    "singularName": "informasi-al-ittifaqiah",
+    "pluralName": "informasi-al-ittifaqiahs",
+    "displayName": "Informasi Al Ittifaqiah"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "profilMd": {
+      "type": "richtext"
+    },
+    "news": {
+      "type": "component",
+      "component": "profil.berita",
+      "repeatable": true
+    },
+    "galeriLuarNegeri": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "galeriTamu": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "bluePrintISCI": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "santri": {
+      "type": "component",
+      "component": "profil.jumlah-sdm-halaman-informasi",
+      "repeatable": true
+    },
+    "sdm": {
+      "type": "component",
+      "component": "profil.jumlah-sdm-halaman-informasi",
+      "repeatable": true
+    },
+    "alumni": {
+      "type": "component",
+      "component": "profil.jumlah-sdm-halaman-informasi",
+      "repeatable": true
+    }
+  }
+}
