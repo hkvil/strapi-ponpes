@@ -7,47 +7,32 @@
     "displayName": "Informasi Al Ittifaqiah"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "profilMd": {
       "type": "richtext"
     },
+    "galeriTamu": {
+      "type": "component",
+      "component": "profil.image-item",
+      "repeatable": true
+    },
+    "galeriLuarNegeri": {
+      "type": "component",
+      "component": "profil.image-item",
+      "repeatable": true
+    },
+    "bluePrintISCI": {
+      "type": "component",
+      "component": "profil.image-item",
+      "repeatable": true
+    },
     "news": {
       "type": "component",
       "component": "profil.berita",
       "repeatable": true
-    },
-    "galeriLuarNegeri": {
-      "type": "media",
-      "multiple": true,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "galeriTamu": {
-      "type": "media",
-      "multiple": true,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "bluePrintISCI": {
-      "type": "media",
-      "multiple": true,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
     },
     "santri": {
       "type": "component",

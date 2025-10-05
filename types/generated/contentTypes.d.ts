@@ -526,28 +526,19 @@ export interface ApiInformasiAlIttifaqiahInformasiAlIttifaqiah
     singularName: 'informasi-al-ittifaqiah';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     alumni: Schema.Attribute.Component<
       'profil.jumlah-sdm-halaman-informasi',
       true
     >;
-    bluePrintISCI: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
+    bluePrintISCI: Schema.Attribute.Component<'profil.image-item', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    galeriLuarNegeri: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
-    galeriTamu: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
+    galeriLuarNegeri: Schema.Attribute.Component<'profil.image-item', true>;
+    galeriTamu: Schema.Attribute.Component<'profil.image-item', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
