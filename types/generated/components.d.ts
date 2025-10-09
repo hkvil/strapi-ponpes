@@ -1,5 +1,17 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface DonasiTansaksiDonasi extends Struct.ComponentSchema {
+  collectionName: 'components_donasi_tansaksi_donasis';
+  info: {
+    displayName: 'Tansaksi Donasi';
+  };
+  attributes: {
+    amount: Schema.Attribute.String;
+    date: Schema.Attribute.Date;
+    name: Schema.Attribute.String;
+  };
+}
+
 export interface FilesFiles extends Struct.ComponentSchema {
   collectionName: 'components_files_files';
   info: {
@@ -176,6 +188,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'donasi.tansaksi-donasi': DonasiTansaksiDonasi;
       'files.files': FilesFiles;
       'kontak.kontak': KontakKontak;
       'profil.berita': ProfilBerita;

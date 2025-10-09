@@ -103,6 +103,12 @@
       "relation": "oneToMany",
       "target": "api::kehadiran-guru.kehadiran-guru",
       "mappedBy": "staff"
+    },
+    "prestasis": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::prestasi.prestasi",
+      "mappedBy": "staff"
     }
   }
 }

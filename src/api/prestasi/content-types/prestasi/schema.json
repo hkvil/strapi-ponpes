@@ -45,10 +45,26 @@
     "tahun": {
       "type": "string"
     },
+    "sertifikat": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
     "santri": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::santri.santri",
+      "inversedBy": "prestasis"
+    },
+    "staff": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::staff.staff",
       "inversedBy": "prestasis"
     }
   }

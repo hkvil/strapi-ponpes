@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_donasi_tansaksi_donasis",
+  "info": {
+    "displayName": "Tansaksi Donasi"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "string"
+    },
+    "date": {
+      "type": "date"
+    }
+  },
+  "config": {}
+}

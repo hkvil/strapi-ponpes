@@ -479,6 +479,7 @@ export interface ApiDonasiDonasi extends Struct.CollectionTypeSchema {
     target: Schema.Attribute.BigInteger;
     terkumpul: Schema.Attribute.BigInteger;
     title: Schema.Attribute.String;
+    transaksi: Schema.Attribute.Component<'donasi.tansaksi-donasi', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -809,6 +810,10 @@ export interface ApiPrestasiPrestasi extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     santri: Schema.Attribute.Relation<'manyToOne', 'api::santri.santri'>;
+    sertifikat: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    staff: Schema.Attribute.Relation<'manyToOne', 'api::staff.staff'>;
     tahun: Schema.Attribute.String;
     tingkat: Schema.Attribute.Enumeration<
       [
@@ -998,6 +1003,7 @@ export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
     nip: Schema.Attribute.String;
     noTelepon: Schema.Attribute.String;
     pendidikanTerakhir: Schema.Attribute.Enumeration<['S1', 'S2', 'S3']>;
+    prestasis: Schema.Attribute.Relation<'oneToMany', 'api::prestasi.prestasi'>;
     publishedAt: Schema.Attribute.DateTime;
     sertifikasi: Schema.Attribute.Text;
     statusGuruTetap: Schema.Attribute.Boolean;

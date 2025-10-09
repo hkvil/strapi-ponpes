@@ -32,6 +32,11 @@
     },
     "terkumpul": {
       "type": "biginteger"
+    },
+    "transaksi": {
+      "type": "component",
+      "component": "donasi.tansaksi-donasi",
+      "repeatable": true
     }
   }
 }
