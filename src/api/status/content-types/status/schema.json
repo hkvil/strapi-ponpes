@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "statuses",
+  "info": {
+    "singularName": "status",
+    "pluralName": "statuses",
+    "displayName": "Status"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "isMaintenance": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

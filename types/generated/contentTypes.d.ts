@@ -1019,6 +1019,34 @@ export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiStatusStatus extends Struct.SingleTypeSchema {
+  collectionName: 'statuses';
+  info: {
+    displayName: 'Status';
+    pluralName: 'statuses';
+    singularName: 'status';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    isMaintenance: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::status.status'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTahunAjaranTahunAjaran extends Struct.CollectionTypeSchema {
   collectionName: 'tahun_ajarans';
   info: {
@@ -1586,6 +1614,7 @@ declare module '@strapi/strapi' {
       'api::santri.santri': ApiSantriSantri;
       'api::slider.slider': ApiSliderSlider;
       'api::staff.staff': ApiStaffStaff;
+      'api::status.status': ApiStatusStatus;
       'api::tahun-ajaran.tahun-ajaran': ApiTahunAjaranTahunAjaran;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
