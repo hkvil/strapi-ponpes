@@ -9,7 +9,7 @@ export default (config: UserConfig) => {
     },
     server: {
       host: true,
-      allowedHosts: ['.ngrok-free.app','.trycloudflare.com'], // ✅ izinkan semua domain ngrok
+      allowedHosts: ['.hidayat.me'], // ✅ izinkan semua domain hidayat.me
       port: 5173,
     },
   });
