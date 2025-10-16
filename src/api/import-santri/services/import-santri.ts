@@ -34,6 +34,7 @@ export default {
     });
 
     let imported = 0;
+    let skipped = 0;
     let failed = 0;
     const errors: any[] = [];
 
@@ -89,6 +90,11 @@ export default {
               tahunLulus: row.tahunLulus || null,
             },
           });
+          imported++;
+          strapi.log.info(`[IMPORT] Sukses: ${row.namaSantri} (${row.nisn})`);
+        } else {
+          skipped++;
+          strapi.log.info(`[IMPORT] SKIP: ${row.namaSantri} (${row.nisn}) sudah ada`);
         }
 
         // 5. Riwayat Kelas
@@ -112,8 +118,6 @@ export default {
             },
           });
         }
-        imported++;
-        strapi.log.info(`[IMPORT] Sukses: ${row.namaSantri} (${row.nisn})`);
       } catch (err) {
         failed++;
         strapi.log.error(`[IMPORT] ERROR pada ${row.namaSantri} (${row.nisn}):`, err);
@@ -121,6 +125,6 @@ export default {
       }
     }
 
-    ctx.send({ imported, failed, errors });
+    ctx.send({ imported, skipped, failed, errors });
   },
 };
